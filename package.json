@@ -2,7 +2,7 @@
   "name": "my-portfolio",
   "version": "0.1.0",
   "private": true,
-  "homepage": "morona/",
+  "homepage": "https://marilisemorona.github.io/morona/",
   "dependencies": {
     "bootstrap": "^5.2.3",
     "react-bootstrap": "^2.7.4",
