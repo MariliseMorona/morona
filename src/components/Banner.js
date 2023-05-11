@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { ArrowRightCircle } from "react-bootstrap-icons";
+import { EnvelopeAt } from "react-bootstrap-icons";
 import headerImg from "../assets/img/logo_white.png";
 
 export const Banner = () => {
 
     const [loopNum, setLoopNum] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
-    const toRotate = ["Agronomist", "Mobile Developer", "Software Engineer"];
+    const toRotate = ["Marilise Morona"];
     const [text, setText] = useState('');
     const [delta, setDelta] = useState(300 - Math.random() * 100);
     const period = 2000;
@@ -44,10 +44,12 @@ const tick = () => {
             <Container>
                 <Row className="align-items-center">
                     <Col xs={12} md={6} xl={7}>
-                        <span className="tagline">Welcome to my portfolio</span>
-                        <h1>{`I'm `}<span className="wrap">{text}</span></h1>
-                        <p>Mussum Ipsum, cacilds vidis litro abertis. Viva Forevis aptent taciti sociosqu ad litora torquent.Admodum accumsan disputationi eu sit. Vide electram sadipscing et per.Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis!Praesent malesuada urna nisi, quis volutpat erat hendrerit non. Nam vulputate dapibus.</p>
-                        <button onClick={() => console.log('connect')}>Let's connect<ArrowRightCircle size={25}/></button>
+                        {/*<span className="tagline">Olá Mundo!</span>*/}
+                        <h2 className="tagline">Olá Mundo!</h2>
+                        <h1>{`Eu sou `}<span className="wrap">{text}</span></h1>
+                        <p>Sou uma Agrônoma apaixonada por tecnologia. Curiosamente entrei no mundo da programação através de <i>hackathons</i> e ao ser <i>co-founder</i> de uma <i>AgroTech</i>. Desde então venho buscando conhecimento sobre tecnologia e inovação, apreendendo muito sobre o desenvolvimento <i>mobile</i>, sobre a cultura <i>DevOps</i>. 
+                        Hoje atuo como desenvolvedora iOS na ZarpSystem junto a Fintech S3Bank. Além de atuar, de forma autônoma, como consultora de transformação digital.</p>
+                        {/*<button onClick={() => console.log('connect')}>Chama<EnvelopeAt size={15}/></button>*/}
                     </Col>
                     <Col xs={12} md={3} xl={2}>
                         <img src={headerImg} alt="Header Img"/>
