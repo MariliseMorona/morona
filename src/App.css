@@ -266,7 +266,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   line-height: 1.5em;
   width: 96%;
 }
-{/*}.banner button {
+/*}.banner button {
   color: #fff;
   font-weight: 500;
   font-size: 15px;
@@ -283,7 +283,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 .banner button:hover svg {
   margin-left: 25px;
-}*/}
+}*/
 .banner img {
   animation: updown 3s linear infinite;
 }
