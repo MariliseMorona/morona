@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { EnvelopeAt } from "react-bootstrap-icons";
-import headerImg from "../assets/img/logo_white.png";
 
 export const Banner = () => {
 
@@ -44,15 +42,10 @@ const tick = () => {
             <Container>
                 <Row className="align-items-center">
                     <Col xs={12} md={6} xl={7}>
-                        {/*<span className="tagline">Olá Mundo!</span>*/}
                         <h2 className="tagline">Olá Mundo!</h2>
                         <h1>{`Eu sou `}<span className="wrap">{text}</span></h1>
                         <p>Sou uma Agrônoma apaixonada por tecnologia. Curiosamente entrei no mundo da programação através de <i>hackathons</i> e ao ser <i>co-founder</i> de uma <i>AgroTech</i>. Desde então venho buscando conhecimento sobre tecnologia e inovação, apreendendo muito sobre o desenvolvimento <i>mobile</i>, sobre a cultura <i>DevOps</i>. 
                         Hoje atuo como desenvolvedora iOS na ZarpSystem junto a Fintech S3Bank. Além de atuar, de forma autônoma, como consultora de transformação digital.</p>
-                        {/*<button onClick={() => console.log('connect')}>Chama<EnvelopeAt size={15}/></button>*/}
-                    </Col>
-                    <Col xs={12} md={3} xl={2}>
-                        <img src={headerImg} alt="Header Img"/>
                     </Col>
                 </Row>
             </Container>

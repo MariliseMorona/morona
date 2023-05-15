@@ -35,11 +35,7 @@ export const Skills = () => {
                     <div className="skill-bx">
                         <h2>Formações</h2>
                         <p>Formada em Agronomia pela UFPR, ingressei no MBA em Digital Business 
-                            para entender como poderia contribuir para uma transformação digital 
-                            num mercado cada vez mais tecnológico. Hoje ingresso no MBA em 
-                            Engenharia de Software pois compreendo que mais do que oferecer 
-                            um produto tecnológico, precisamos construir uma solução que confira
-                            confiança, seguridade, eficiência e sustentabilidade.</p>
+                            para entender como poderia contribuir para uma transformação digital numa sociedade cada vez mais tecnológica. Hoje dou início ao MBA em Engenharia de Software pois compreendo que mais do que oferecer um produto tecnológico, precisamos construir soluções que confiram confiança, seguridade, eficiência e sustentabilidade.</p>
                         <Carousel responsive={responsive} infinite={true} className="skill-slider">
                             <div className="item">
                                 <img src={agritech} alt="Image"/>
