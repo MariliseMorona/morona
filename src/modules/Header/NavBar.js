@@ -1,9 +1,10 @@
+import './header.css';
 import { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import logoColor from '../assets/img/logo_color.png';
-import iconLinkedin from '../assets/img/icon_linkedin.png';
-import iconInstagram from '../assets/img/icon_instagram.png';
-import iconFacebook from '../assets/img/icon_facebook.png';
+import logoColor from '../../assets/img/logo_color.png';
+import iconLinkedin from '../../assets/img/icon_linkedin.png';
+import iconInstagram from '../../assets/img/icon_instagram.png';
+import iconFacebook from '../../assets/img/icon_facebook.png';
 
 export const NavBar = () => {
 

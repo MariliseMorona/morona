@@ -1,3 +1,4 @@
+import './banner.css';
 import { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
@@ -41,11 +42,11 @@ const tick = () => {
         <section className="banner" id="home">
             <Container>
                 <Row className="align-items-center">
-                    <Col xs={12} md={6} xl={7}>
+                    <Col xs={12} md={6} xl={4}>
                         <h2 className="tagline">Olá Mundo!</h2>
                         <h1>{`Eu sou `}<span className="wrap">{text}</span></h1>
                         <p>Sou uma Agrônoma apaixonada por tecnologia. Curiosamente entrei no mundo da programação através de <i>hackathons</i> e ao ser <i>co-founder</i> de uma <i>AgroTech</i>. Desde então venho buscando conhecimento sobre tecnologia e inovação, apreendendo muito sobre o desenvolvimento <i>mobile</i>, sobre a cultura <i>DevOps</i>. 
-                        Hoje atuo como desenvolvedora iOS na ZarpSystem junto a Fintech S3Bank. Além de atuar, de forma autônoma, como consultora de transformação digital.</p>
+                        Hoje atuo como desenvolvedora iOS na ZarpSystem. Além de atuar, de forma autônoma, como consultora de transformação digital.</p>
                     </Col>
                 </Row>
             </Container>

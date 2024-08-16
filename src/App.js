@@ -1,9 +1,11 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavBar } from './components/NavBar';
-import { Banner } from './components/Banner';
-import { Skills } from './components/Skills';
-import { Experience } from './components/Experience';
+import { NavBar } from './modules/Header/NavBar';
+import { Banner } from './modules/Body/Banner';
+import { Skills } from './modules/Body/Skills';
+import { Experience } from './modules/Body/Experience';
+import { Projects } from './modules/Body/Projects';
+import { Footer } from './modules/Footer/Footer';
 
 
 function App() {
@@ -13,6 +15,8 @@ function App() {
       <Banner/>
       <Skills />
       <Experience/>
+      <Projects/>
+      <Footer/>
     </div>
   );
 }

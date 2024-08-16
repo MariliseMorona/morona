@@ -1,0 +1,99 @@
+.experience {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 80px 0;
+  position: relative;
+  background-color: black;
+}
+.experience .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.experience h2 {
+    font-size: 35px;
+    font-weight: 700;
+  text-align: center;
+  color: #897870;
+}
+.experience p {
+  color: #B8B8B8;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  line-height: 1.5em;
+  margin: 14px auto 30px auto;
+  text-align: center;
+  width: 56%;
+}
+.experience .nav.nav-pills {
+  width: 50%;
+  height: 40px;
+  margin: 0 auto;
+  border-radius: 95px;
+  overflow: hidden;
+}
+.experience .nav.nav-pills .nav-item {
+  width: 33.33333%;
+  box-sizing: border-box;
+  margin: 0 10px;
+  flex: 1;
+}
+.experience .nav.nav-pills .nav-link {
+  background-color: transparent;
+  border-radius: 0;
+  padding: 10px 0;
+  color: #ffff;
+  width: 100%;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+  position: relative;
+  transition: 0.3s ease-in-out;
+  text-align: center;
+  z-index: 0;
+  box-sizing: border-box;
+}
+.experience .nav.nav-pills .nav-link::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90.21deg, #003531 -5.91%, #468d4f 111.58%);
+  top: 0;
+  left: 0;
+  z-index: -5;
+  transition: 0.3s ease-in-out;
+  border-radius: 95px;
+}
+.experience .nav.nav-pills .nav-link.active::before {
+  width: 100% !important;
+}
+.experience .nav.nav-pills .nav-link.active {
+  border: 1px solid rgba(255, 255, 255, 0.502);
+  border-radius: 95px;
+}
+.nav-link#experiences-tabs-tab-first {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 95px;
+}
+.nav-link#experiences-tabs-tab-second {
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 95px;
+}
+.nav-link#experiences-tabs-tab-third {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 95px;
+}
+.exp-col {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding: 20px 0;
+  position: relative;
+  background-color: black;
+}
