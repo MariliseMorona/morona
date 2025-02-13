@@ -34,16 +34,11 @@ export const Skills = () => {
                     <Col>
                     <div className="skill-bx">
                         <h2>Formações</h2>
-                        <p>Formada em Agronomia pela UFPR, ingressei no MBA em Digital Business 
-                            para entender como poderia contribuir para uma transformação digital numa sociedade cada vez mais tecnológica. Hoje como Engenheira de Software, compreendo que mais do que oferecer um produto tecnológico, precisamos construir soluções que confiram confiança, seguridade, eficiência e sustentabilidade.</p>
+                        <p> Formada em MBA em Engenharia de Software pela UTFPR e MBA em Digital Business pela ESALQ/USP, desenvolvi uma visão ampla sobre a transformação digital em uma sociedade cada vez mais tecnológica. Acredito que, mais do que simplesmente criar produtos tecnológicos, é essencial construir soluções que inspirem confiança, garantam segurança, promovam eficiência e impulsionem a sustentabilidade.</p>
                         <Carousel responsive={responsive} infinite={true} className="skill-slider">
                             <div className="item">
                                 <img src={agritech} alt="Image"/>
                                 <h5>Agrônoma</h5>
-                            </div>
-                            <div className="item">
-                                <img src={developer} alt="Image"/>
-                                <h5>Desenvolvedora Mobile</h5>
                             </div>
                             <div className="item">
                                 <img src={engineer} alt="Image"/>
@@ -51,7 +46,7 @@ export const Skills = () => {
                             </div>
                             <div className="item">
                                 <img src={business} alt="Image"/>
-                                <h5>Especialista em Negócios Digital</h5>
+                                <h5>Especialista em Negócios Digitais</h5>
                             </div>
                             <div className="item">
                                 <img src={esg} alt="Image"/>

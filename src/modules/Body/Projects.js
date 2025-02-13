@@ -43,7 +43,7 @@ export const Projects = () => {
                             </div>
                             <div className="item">
                             <p>Um pouco sobre atuar em uma healthcare.</p>
-                                <img src={developer} alt="Image"/>
+                                <img src={developerMobile} alt="Image"/>
                                 <h5>Desenvolvedora Mobile</h5>
                             </div>
                             <div className="item">
