@@ -33,7 +33,7 @@
 }
 .skill h2 {
   font-size: 35px;
-  font-weight: 700;
+  font-weight: 800;
   color: #897870;
 }
 .skill p {
@@ -42,6 +42,9 @@
     letter-spacing: 0.8px;
     line-height: 1.5em;
     margin: 14px 0 75px 0;
+    padding: 30px 30px 30px 30px;
+    text-align: justify;
+    text-indent: 20px;
 }
 .skill h5 {
   font-size: 16px;
