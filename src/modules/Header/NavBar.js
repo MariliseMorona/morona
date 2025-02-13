@@ -53,7 +53,7 @@ export const NavBar = () => {
                             <a href="#"><img src={iconInstagram} alt=""/></a>
                             <a href="#"><img src={iconFacebook} alt=""/></a>
                         </div>
-                        <button className="vvd"><span>Contato</span></button>
+                        <button className="navbar-button" onClick={() => window.open('https://wa.me/5541992649585?text=Olá, gostaria de saber mais sobre seus serviços!')}><span>Contato</span></button>
                     </span>
                 </Navbar.Collapse>
             </Container>
