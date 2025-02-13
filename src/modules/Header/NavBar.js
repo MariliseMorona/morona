@@ -1,9 +1,10 @@
+import './header.css';
 import { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import logoColor from '../assets/img/logo_color.png';
-import iconLinkedin from '../assets/img/icon_linkedin.png';
-import iconInstagram from '../assets/img/icon_instagram.png';
-import iconFacebook from '../assets/img/icon_facebook.png';
+import logoColor from '../../assets/img/logo_color.png';
+import iconLinkedin from '../../assets/img/icon_linkedin.png';
+import iconInstagram from '../../assets/img/icon_instagram.png';
+import iconFacebook from '../../assets/img/icon_facebook.png';
 
 export const NavBar = () => {
 
@@ -26,11 +27,15 @@ export const NavBar = () => {
         setActiveLink(value);
     }
 
+    const autoOpenAlink = (url = ``) => {
+        window.open(url, "open testing page in a same tab page");
+      }
+
     return (
         <Navbar expand="lg" className={scrolled ? "scrolled" : ""}>
             <Container>
                 <Navbar.Brand href="#home">
-                    <img src={logoColor} alt="My Octocat"/>
+                    <img src={logoColor} alt="Logo"/>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav">
                     <span className="navbar-toggler-icon"></span>
@@ -44,7 +49,7 @@ export const NavBar = () => {
                     </Nav>
                     <span className="navbar-text">
                         <div className="social-icon">
-                            <a href="#"><img src={iconLinkedin} alt=""/></a>
+                            <a href="#"><img src={iconLinkedin} alt="" target="_self" onClick= {() => autoOpenAlink('https://www.linkedin.com/in/marilise-morona/')}/></a>
                             <a href="#"><img src={iconInstagram} alt=""/></a>
                             <a href="#"><img src={iconFacebook} alt=""/></a>
                         </div>
