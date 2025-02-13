@@ -76,6 +76,13 @@ p.danger {
 	color: red;
 }
 
+section#skills {
+  scroll-margin-top: 120px;
+}
+
+section#experience {
+  scroll-margin-top: 20px;
+}
 
 
 /* .exp-imgbx:hover .proj-txtx {
