@@ -45,8 +45,7 @@ const tick = () => {
                     <Col xs={12} md={6} xl={4}>
                         <h2 className="tagline">Olá Mundo!</h2>
                         <h1>{`Eu sou `}<span className="wrap">{text}</span></h1>
-                        <p>Sou uma Agrônoma apaixonada por tecnologia. Curiosamente entrei no mundo da programação através de <i>hackathons</i> e ao ser <i>co-founder</i> de uma <i>AgroTech</i>. Desde então venho buscando conhecimento sobre tecnologia e inovação, apreendendo muito sobre o desenvolvimento <i>mobile</i>, sobre a cultura <i>DevOps</i>. 
-                        Hoje atuo como desenvolvedora iOS na ZarpSystem. Além de atuar, de forma autônoma, como consultora de transformação digital.</p>
+                        <p> Sou uma Agrônoma apaixonada por tecnologia e inovação. Minha jornada na programação começou de forma curiosa, por meio de <i>hackathons</i> e como <i>co-founder</i> de uma AgriTech, onde mergulhei no desenvolvimento mobile e na cultura <i>DevOps</i>. Desde então, venho expandindo meu conhecimento para transformar ideias em soluções digitais escaláveis. Hoje, sou <i>Software Engineer</i> na ZarpSystem e também atuo de forma autônoma como consultora de transformação digital, ajudando empresas a otimizar processos e impulsionar a inovação.</p>
                     </Col>
                 </Row>
             </Container>

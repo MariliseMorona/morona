@@ -12,7 +12,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  border-radius: 10px;
   overflow: hidden;
   margin-bottom: 24px;
   width: 60%;
@@ -39,15 +38,26 @@
 }
 
 /* Animations */
+.exp-imgbx {
+  position: relative;
+  overflow: hidden;
+}
+
 .exp-imgbx::before {
   content: "";
   background: linear-gradient(90.21deg, #897870 -5.91%, #468d4f 111.58%);
   opacity: 0.85;
   position: absolute;
-  width: 100%;
+  width: 0;
   height: 0;
-  transition: 0.4s ease-in-out;
+  top: 0;
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: top left;
+  transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
 }
+
 .exp-imgbx:hover::before {
+  width: 140%;
   height: 100%;
 }

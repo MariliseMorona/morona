@@ -81,7 +81,6 @@ span.navbar-text {
 }
 .navbar-text button span {
   z-index: 1;
-  
 }
 .navbar-text button::before {
   content: "";

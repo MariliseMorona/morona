@@ -61,7 +61,7 @@
   position: absolute;
   width: 0;
   height: 100%;
-  background: linear-gradient(90.21deg, #003531 -5.91%, #468d4f 111.58%);
+  background: linear-gradient(to right, #003531 0%, #897870  51%, #468d4f  100%);
   top: 0;
   left: 0;
   z-index: -5;

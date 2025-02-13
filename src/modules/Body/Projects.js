@@ -4,7 +4,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import skillsBg from '../../assets/img/banner_home.png';
 import agritech from '../../assets/img/agritech_lineWhite.png';
-import developer from '../../assets/img/developer_lineWhite.png';
+import developerMobile from '../../assets/img/developer_mobile_lineWhite.png';
 import engineer from '../../assets/img/engineerSoftware_lineWhite.png';
 import business from '../../assets/img/business_lineWhite.png';
 import esg from '../../assets/img/esg_lineWhite.png';
@@ -43,7 +43,7 @@ export const Projects = () => {
                             </div>
                             <div className="item">
                             <p>Um pouco sobre atuar em uma healthcare.</p>
-                                <img src={developer} alt="Image"/>
+                                <img src={developerMobile} alt="Image"/>
                                 <h5>Desenvolvedora Mobile</h5>
                             </div>
                             <div className="item">

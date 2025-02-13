@@ -2,10 +2,10 @@ import './experience.css';
 import { Col, Container, Tab, Row, Nav } from "react-bootstrap";
 import { ExperienceCard } from "./cards/ExperienceCard";
 import background from "../../assets/img/banner_home_bg.png";
-import projImg1 from "../../assets/img/agritech.png";
-import projImg2 from "../../assets/img/developer.png";
-import projImg3 from "../../assets/img/agritech.png";
-import projImg4 from "../../assets/img/agritech.png";
+import projImg1 from "../../assets/img/agritech_lineWhite.png";
+import projImg2 from "../../assets/img/developer_mobile_lineWhite.png";
+import projImg3 from "../../assets/img/engineerSoftware_lineWhite.png";
+import projImg4 from "../../assets/img/business_lineWhite.png";
 import projImg5 from "../../assets/img/business.png";
 import projImg6 from "../../assets/img/agritech.png";
 import 'animate.css';
@@ -16,42 +16,52 @@ export const Experience = () => {
     const techExperiences = [
         {
             title: "Desenvolvedora iOS",
-            description: "Empresa: Havan Labs Projeto: Super App",
-            imgUrl: projImg6
-        },
-        {
-            title: "Desenvolvedora iOS",
-            description: "Empresa: ZarpSystem Projeto: S3Bank",
-            imgUrl: projImg1
-        },
-        {
-            title: "Desenvolvedora iOS",
-            description: "Empresa: Selecionar Projeto: SERASA",
+            description: "Havan Labs - Projeto: Super App",
             imgUrl: projImg2
         },
         {
-            title: "Analista de dados",
-            description: "Empresa: IBRAFE Projeto: Produção e mercado de importação e exportação.",
+            title: "Desenvolvedora FullStack",
+            description: "Zarpsystem - Projeto: Easyfly",
             imgUrl: projImg3
+        },
+        {
+            title: "Desenvolvedora iOS",
+            description: "Zarpsystem - Projeto: NDI",
+            imgUrl: projImg2
+        },
+        {
+            title: "Desenvolvedora iOS",
+            description: "Zarpsystem - Projeto: S3Bank",
+            imgUrl: projImg2
+        },
+        {
+            title: "Desenvolvedora iOS",
+            description: "Selecionar - Projeto: SERASA",
+            imgUrl: projImg2
         }
     ];
 
     const agroExperiences = [
         {
             title: "Analista de dados",
-            description: "Empresa: IBRAFE Projeto: Produção e mercado de importação e exportação.",
-            imgUrl: projImg3
+            description: "IBRAFE - Projeto: Produção e mercado de importação e exportação.",
+            imgUrl: projImg1
         },
         {
             title: "Geoprocessamento",
-            description: "Empresa: EMATER Projeto: Microbacias do Paraná",
-            imgUrl: projImg4
+            description: "EMATER - IAT/PR - Projeto: Microbacias do Paraná",
+            imgUrl: projImg1
         },
         {
             title: "Comercial",
-            description: "Empresa: Grupo Esalflores Projeto: Paisagismo",
-            imgUrl: projImg5
-        }
+            description: "Grupo Esalflores - Projeto: Paisagismo",
+            imgUrl: projImg4
+        },
+        {
+            title: "Assistente P&D",
+            description: "Jardim Botânico de Curitiba - Projeto: Produção vegatal.",
+            imgUrl: projImg4
+        },
     ];
 
     const businessExperiences = [
@@ -63,7 +73,7 @@ export const Experience = () => {
         {
             title: "Comercial",
             description: "Empresa: Grupo Esalflores Projeto: Paisagismo",
-            imgUrl: projImg5
+            imgUrl: projImg4
         }
     ];
 
