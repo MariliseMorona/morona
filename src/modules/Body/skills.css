@@ -8,6 +8,11 @@
   text-align: center;
   padding: 40px 30px;
   margin-top: -60px;
+  box-shadow: 0 0 3px #002425,
+              0 0 6px #002425,
+              0 0 9px #002425,
+              0 0 12px #002425,
+              0 0 15px #002425;
 }
 .react-multiple-carousel__arrow {
   width: 20px;
