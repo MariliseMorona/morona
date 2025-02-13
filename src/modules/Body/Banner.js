@@ -42,10 +42,20 @@ const tick = () => {
         <section className="banner" id="home">
             <Container>
                 <Row className="align-items-center">
-                    <Col xs={12} md={6} xl={4}>
+                    <Col xs={12} md={6} xl={6}>
                         <h2 className="tagline">Olá Mundo!</h2>
-                        <h1>{`Eu sou `}<span className="wrap">{text}</span></h1>
-                        <p> Sou uma Agrônoma apaixonada por tecnologia e inovação. Minha jornada na programação começou de forma curiosa, por meio de <i>hackathons</i> e como <i>co-founder</i> de uma AgriTech, onde mergulhei no desenvolvimento mobile e na cultura <i>DevOps</i>. Desde então, venho expandindo meu conhecimento para transformar ideias em soluções digitais escaláveis. Hoje, sou <i>Software Engineer</i> na ZarpSystem e também atuo de forma autônoma como consultora de transformação digital, ajudando empresas a otimizar processos e impulsionar a inovação.</p>
+                        <div className="container-text">
+                            <h1 className="tagline-text">{`Eu sou `}</h1>
+                            <h1><span className="wrap">{text}</span></h1>
+                        </div>
+                        <p> Sou uma Agrônoma apaixonada por tecnologia e inovação. 
+                            Minha jornada na programação começou de forma curiosa, por meio de 
+                            <i>hackathons</i> e como <i>co-founder</i> de uma AgriTech, 
+                            onde mergulhei no desenvolvimento mobile e na cultura <i>DevOps</i>. 
+                            Desde então, venho expandindo meu conhecimento para transformar ideias 
+                            em soluções digitais escaláveis. Hoje, sou <i>Software Engineer</i> na 
+                            ZarpSystem e também atuo de forma autônoma como consultora de transformação digital, 
+                            ajudando empresas a otimizar processos e impulsionar rumo a inovação.</p>
                     </Col>
                 </Row>
             </Container>

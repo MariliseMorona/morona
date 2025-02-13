@@ -1,6 +1,6 @@
 .banner {
     margin-top: 0;
-    padding: 260px 0 100px 0;
+    padding: 390px 0 200px 0;
     background-image: url('../../assets/img/banner_home.png');
     background-position: top center;
     background-size: cover;
@@ -15,8 +15,14 @@
     display: inline-block;
     color: #d7e7d8;
   }
-  .banner span {
-    color: #414b3b;
+  .banner .tagline-text {
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    padding: 8px 10px;
+    font-size: 16px;
+    margin-bottom: 16px;
+    display: inline-block;
+    color: #d7e7d8;
   }
   .banner h1 {
     font-size: 45px;
@@ -25,33 +31,30 @@
     line-height: 1;
     margin-bottom: 20px;
     display: block;
-    color: #414b3b;
+    color: #ffffff;
+    padding-top: 5px;
+    text-shadow:  0 0 10px #414b3b,
+                  0 0 20px #414b3b,
+                  0 0 40px #414b3b,
+                  0 0 80px #414b3b,
+                  0 0 120px #414b3b;
   }
   .banner p {
     color: #d7e7d8;
     font-size: 12px;
-    letter-spacing: 0.8px;
-    line-height: 1.5em;
-    width: 96%;
-  }
-  /*}.banner button {
-    color: #fff;
-    font-weight: 500;
-    font-size: 15px;
-    margin-top: 30px;
     letter-spacing: 0.9px;
+    line-height: 1.5em;
+    width: 100%;
+    text-align: justify;
+    text-indent: 20px;
+    padding-top: 30px;
+  }
+  .container-text {
     display: flex;
-    align-items: center;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    align-items: baseline
   }
-  .banner button svg {
-    font-size: 25px;
-    margin-left: 10px;
-    transition: 0.3s ease-in-out;
-    line-height: 1;
-  }
-  .banner button:hover svg {
-    margin-left: 25px;
-  }*/
   .banner img {
     animation: updown 3s linear infinite;
   }
