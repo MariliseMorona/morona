@@ -44,16 +44,16 @@ export const NavBar = () => {
                     <Nav className="ms-auto">
                         <Nav.Link href="#home" className={activeLink === 'home' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('home')}>Sobre</Nav.Link>
                         <Nav.Link href="#skills" className={activeLink === 'skills' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('skills')}>Formações</Nav.Link>
-                        <Nav.Link href="#experience" className={activeLink === 'experience' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('projetcs')}>Experiências</Nav.Link>
-                        <Nav.Link href="#projects" className={activeLink === 'projects' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('projetcs')}>Projetos</Nav.Link>
+                        <Nav.Link href="#experience" className={activeLink === 'experience' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('experience')}>Experiências</Nav.Link>
+                        <Nav.Link href="#projects" className={activeLink === 'projects' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('projects')}>Projetos</Nav.Link>
                     </Nav>
                     <span className="navbar-text">
                         <div className="social-icon">
                             <a href="#"><img src={iconLinkedin} alt="" target="_self" onClick= {() => autoOpenAlink('https://www.linkedin.com/in/marilise-morona/')}/></a>
-                            <a href="#"><img src={iconInstagram} alt=""/></a>
-                            <a href="#"><img src={iconFacebook} alt=""/></a>
+                            {/* <a href="#"><img src={iconInstagram} alt=""/></a>
+                            <a href="#"><img src={iconFacebook} alt=""/></a> */}
                         </div>
-                        <button className="vvd"><span>Contato</span></button>
+                        <button className="navbar-button" onClick={() => window.open('https://wa.me/5541992649585?text=Olá, gostaria de saber mais sobre seus serviços!')}><span>Contato</span></button>
                     </span>
                 </Navbar.Collapse>
             </Container>
