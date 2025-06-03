@@ -1,30 +1,38 @@
 {
   "files": {
-    "main.css": "/morona/static/css/main.7026cb2d.css",
-    "main.js": "/morona/static/js/main.544fe263.js",
-    "static/js/453.f62b74cd.chunk.js": "/morona/static/js/453.f62b74cd.chunk.js",
+    "main.css": "/morona/static/css/main.64e593eb.css",
+    "main.js": "/morona/static/js/main.af76f9da.js",
+    "static/js/453.29deb324.chunk.js": "/morona/static/js/453.29deb324.chunk.js",
     "static/media/banner_home_bg.png": "/morona/static/media/banner_home_bg.7938645eb6fbfc5ba45d.png",
     "static/media/banner_home.png": "/morona/static/media/banner_home.36e952f251b2a7a77277.png",
     "static/media/Montserrat-Regular.ttf": "/morona/static/media/Montserrat-Regular.ceb11275ab638627a643.ttf",
+    "static/media/langSwift.png": "/morona/static/media/langSwift.a7e322299f24742d0cc1.png",
+    "static/media/managerAmb_lineWhite.png": "/morona/static/media/managerAmb_lineWhite.f015c44a319f6927ce4c.png",
+    "static/media/langJava.png": "/morona/static/media/langJava.5d7ebc9b417df03e5ba2.png",
     "static/media/logo_color.png": "/morona/static/media/logo_color.8d3c6a9c336f05fa640c.png",
     "static/media/agritech_lineWhite.png": "/morona/static/media/agritech_lineWhite.ce1f8aabfb2098040665.png",
     "static/media/agritech.png": "/morona/static/media/agritech.01a9de8f12a05212690e.png",
     "static/media/engineerSoftware_lineWhite.png": "/morona/static/media/engineerSoftware_lineWhite.10fe2e889109a2702dd2.png",
+    "static/media/langPhp.png": "/morona/static/media/langPhp.fdea7480d29c606d962f.png",
+    "static/media/langReactNative.png": "/morona/static/media/langReactNative.6e0fce0ddd78fac221a8.png",
+    "static/media/langKotlin.png": "/morona/static/media/langKotlin.8e7b5a242fc76e307ce2.png",
     "static/media/developer_mobile_lineWhite.png": "/morona/static/media/developer_mobile_lineWhite.739280cd9e8253e68019.png",
     "static/media/esg_lineWhite.png": "/morona/static/media/esg_lineWhite.c1ffd87deb6f56720ec2.png",
     "static/media/business_lineWhite.png": "/morona/static/media/business_lineWhite.819825382783294bb35b.png",
+    "static/media/langDart.png": "/morona/static/media/langDart.83eadc3daefb4ee8430a.png",
     "static/media/business.png": "/morona/static/media/business.0aeaa647553eea54e02c.png",
+    "static/media/langJavascript.png": "/morona/static/media/langJavascript.a108db0900572ab3cda5.png",
     "static/media/icon_instagram.png": "/morona/static/media/icon_instagram.18f5c8e78c0fa31834a2.png",
     "static/media/revicons.eot": "/morona/static/media/revicons.a77de540a38981833f9e.eot",
     "static/media/revicons.ttf": "/morona/static/media/revicons.57fd05d4ae650374c8de.ttf",
     "static/media/revicons.woff": "/morona/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/morona/index.html",
-    "main.7026cb2d.css.map": "/morona/static/css/main.7026cb2d.css.map",
-    "main.544fe263.js.map": "/morona/static/js/main.544fe263.js.map",
-    "453.f62b74cd.chunk.js.map": "/morona/static/js/453.f62b74cd.chunk.js.map"
+    "main.64e593eb.css.map": "/morona/static/css/main.64e593eb.css.map",
+    "main.af76f9da.js.map": "/morona/static/js/main.af76f9da.js.map",
+    "453.29deb324.chunk.js.map": "/morona/static/js/453.29deb324.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7026cb2d.css",
-    "static/js/main.544fe263.js"
+    "static/css/main.64e593eb.css",
+    "static/js/main.af76f9da.js"
   ]
 }
