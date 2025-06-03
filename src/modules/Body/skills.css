@@ -1,13 +1,21 @@
 .skill {
-  padding: 0 0 40px 0;
+  padding: 0 0 80px 0;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  min-height: 60vh;
+  box-sizing: border-box
 }
 .skill-bx {
-  background: #151515;
-  border-radius: 64px;
+  background: #191919;
+  border-radius: 35px;
   text-align: center;
   padding: 40px 30px;
   margin-top: -60px;
+  max-width: 80%;
+  transform: translate(10%);
   box-shadow: 0 0 3px #002425,
               0 0 6px #002425,
               0 0 9px #002425,
@@ -15,25 +23,34 @@
               0 0 15px #002425;
 }
 .react-multiple-carousel__arrow {
-  width: 20px;
-  height: 20px;
-  background-color: #468d4f;
+  width: 10px;
+  height: 10px;
+  background-color: transparent; 
   border-radius: 50%;
   z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
+  transition: background-color 0.3s ease; 
+}
+
+.react-multiple-carousel__arrow:hover {
+  background-color: #468d4f; 
 }
 .react-multiple-carousel__arrow--left {
   margin: 0 -30px;
 }
 .react-multiple-carousel__arrow--right {
-  margin: 0 -30px;
+  margin: 0 -20px;
+}
+.react-multi-carousel-item {
+  padding: 0 0 0 0;
+  box-sizing: border-box;
 }
 .skill h2 {
   font-size: 35px;
-  font-weight: 800;
+  font-weight: 1200;
   color: #897870;
 }
 .skill p {
@@ -42,12 +59,12 @@
     letter-spacing: 0.8px;
     line-height: 1.5em;
     margin: 14px 0 75px 0;
-    padding: 30px 30px 30px 30px;
+    padding: 30px 30px 0 30px;
     text-align: justify;
     text-indent: 20px;
 }
 .skill h5 {
-  font-size: 16px;
+  font-size: 12px;
   color: #468d4f;
 }
 .skill-slider {
@@ -56,13 +73,13 @@
   position: relative;
 }
 .skill-slider .item img {
-  width: 40%;
+  width: 30%;
   margin: 0 auto 15px auto;
 }
 .skillsBg {
   top: 28%;
   position: absolute;
   bottom: 0;
-  width: 40%;
+  width: 45%;
   z-index: -4;
 }
