@@ -12,7 +12,7 @@
   background: #191919;
   border-radius: 35px;
   text-align: center;
-  padding: 40px 30px;
+  padding: 20px 10px;
   margin-top: -60px;
   max-width: 80%;
   transform: translate(10%);
@@ -34,15 +34,8 @@
   position: absolute;
   transition: background-color 0.3s ease; 
 }
-
 .react-multiple-carousel__arrow:hover {
   background-color: #468d4f; 
-}
-.react-multiple-carousel__arrow--left {
-  margin: 0 -30px;
-}
-.react-multiple-carousel__arrow--right {
-  margin: 0 -20px;
 }
 .react-multi-carousel-item {
   padding: 0 0 0 0;
@@ -66,6 +59,7 @@
 .skill h5 {
   font-size: 12px;
   color: #468d4f;
+  width: 90%;
 }
 .skill-slider {
   width: 90%;

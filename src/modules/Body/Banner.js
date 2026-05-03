@@ -1,4 +1,7 @@
 import './banner.css';
+import { Canvas } from "@react-three/fiber";
+import ParticlesNetwork from "../Animations/ParticlesNetwork";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
@@ -40,7 +43,15 @@ const tick = () => {
 
     return (
         <section className="banner" id="home">
-            <Container>
+            <div className="banner-background">
+                <Canvas style={{ width: "100%", height: "100%", pointerEvents: "none" }} camera={{ position: [0, 0, 50], fov: 75 }}>
+                    <EffectComposer>
+                        <Bloom intensity={1.5} luminanceThreshold={0.2} />
+                        <ParticlesNetwork />
+                    </EffectComposer>
+                </Canvas>
+            
+            <Container className="banner-content">
                 <Row className="align-items-center">
                     <Col xs={12} md={6} xl={6}>
                         <h2 className="tagline">Olá Mundo!</h2>
@@ -59,6 +70,7 @@ const tick = () => {
                     </Col>
                 </Row>
             </Container>
+            </div>
         </section>
     )
 }

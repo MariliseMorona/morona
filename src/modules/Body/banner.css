@@ -1,10 +1,38 @@
 .banner {
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    isolation: isolate;
     margin-top: 0;
     padding: 390px 0 200px 0;
-    background-image: url('../../assets/img/banner_home.png');
+    background-color: #000;
+    background-image: none;
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
+  }
+  .banner-background {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .banner-background > div,
+  .banner-background canvas {
+    position: absolute;
+    inset: 0;
+  }
+  .banner-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 30px;
+  }
+  .banner-content .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 130px;
+    margin-left: -250px;
   }
   .banner .tagline {
     font-weight: 700;
