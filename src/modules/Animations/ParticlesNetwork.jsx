@@ -2,7 +2,7 @@ import { useRef, useMemo } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-const PARTICLE_COUNT = 80;
+const PARTICLE_COUNT = 65;
 const MAX_DISTANCE = 30;
 const MAX_CONNECTIONS_PER_NODE = 4;
 
@@ -22,19 +22,18 @@ export default function ParticlesNetwork() {
   const activeNodes = useRef(new Set());
   const trunkNodes = useRef(new Set());
 
-  // 🧠 NOVO
   const pulses = useRef([]);
   const lastMouse = useRef(new THREE.Vector3());
 
   // ======================
-  // INIT PARTICLES
+  // INIT PARTICLES (lado direito)
   // ======================
   const { positions, velocities } = useMemo(() => {
     const positions = new Float32Array(PARTICLE_COUNT * 3);
     const velocities = new Float32Array(PARTICLE_COUNT * 3);
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-      positions[i * 3] = Math.random() * 40;
+      positions[i * 3] = 20 + Math.random() * 20; // 👉 direita
       positions[i * 3 + 1] = (Math.random() - 0.5) * 80;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 80;
 
@@ -46,13 +45,18 @@ export default function ParticlesNetwork() {
     return { positions, velocities };
   }, []);
 
+  // ======================
+  // ROOT (somente direita)
+  // ======================
   useMemo(() => {
-    for (let i = 0; i < 5; i++) {
-      const node = Math.floor(Math.random() * PARTICLE_COUNT);
-      activeNodes.current.add(node);
-      trunkNodes.current.add(node);
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const x = positions[i * 3];
+      if (x > 30) {
+        activeNodes.current.add(i);
+        trunkNodes.current.add(i);
+      }
     }
-  }, []);
+  }, [positions]);
 
   const linePositions = useMemo(
     () => new Float32Array(PARTICLE_COUNT * PARTICLE_COUNT * 6),
@@ -85,9 +89,6 @@ export default function ParticlesNetwork() {
     return new THREE.CanvasTexture(canvas);
   }, []);
 
-  // ======================
-  // ANIMATION
-  // ======================
   useFrame((state) => {
     const time = state.clock.elapsedTime;
     const pos = pointsRef.current.geometry.attributes.position.array;
@@ -99,7 +100,7 @@ export default function ParticlesNetwork() {
     );
 
     // ======================
-    // 🧲 CRIA PULSO AO MOVER MOUSE
+    // PULSE
     // ======================
     const deltaMouse = mouseVec.distanceTo(lastMouse.current);
 
@@ -113,7 +114,7 @@ export default function ParticlesNetwork() {
     }
 
     // ======================
-    // MOVE PARTICLES + CAMPO
+    // MOVE + VENTO + MOUSE
     // ======================
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       let px = pos[i * 3];
@@ -124,15 +125,15 @@ export default function ParticlesNetwork() {
 
       const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
 
-      const influenceRadius = 120; // 🔥 DOBRO
-      const forceStrength = 0.04;  // 🔥 MAIS FORTE
-
-      if (distMouse < influenceRadius) {
-        const force = (1 - distMouse / influenceRadius) * forceStrength;
+      if (distMouse < 120) {
+        const force = (1 - distMouse / 120) * 0.04;
 
         velocities[i * 3] += dxMouse * force * 0.001;
         velocities[i * 3 + 1] += dyMouse * force * 0.001;
       }
+
+      // 🌊 vento pra esquerda
+      velocities[i * 3] -= 0.0005;
 
       pos[i * 3] += velocities[i * 3] + Math.sin(time + i) * 0.002;
       pos[i * 3 + 1] += velocities[i * 3 + 1] + Math.cos(time + i) * 0.002;
@@ -148,11 +149,9 @@ export default function ParticlesNetwork() {
     pointsRef.current.geometry.attributes.position.needsUpdate = true;
 
     // ======================
-    // GROWTH
+    // GROWTH (direita → esquerda)
     // ======================
-    const spawnRate = 2;
-
-    for (let k = 0; k < spawnRate; k++) {
+    for (let k = 0; k < 2; k++) {
       const activeArray = Array.from(activeNodes.current);
       if (!activeArray.length) break;
 
@@ -177,24 +176,20 @@ export default function ParticlesNetwork() {
         const bx = pos[j * 3];
         const by = pos[j * 3 + 1];
 
-        const directionalBias = bx - ax;
-        if (directionalBias < 2) continue;
+        // 👈 DIREÇÃO INVERTIDA
+        const directionalBias = ax - bx;
+        if (directionalBias < 1) continue;
 
-        const mouseDist = Math.hypot(bx - mouseVec.x, by - mouseVec.y);
-        const towardMouse = mouseVec.x - ax;
+        const verticalBias = Math.abs(by - ay);
+        if (verticalBias > 25) continue;
 
-        const dx = ax - bx;
-        const dy = ay - by;
-        const dz = pos[i * 3 + 2] - pos[j * 3 + 2];
+        const dist = Math.sqrt(
+          (ax - bx) ** 2 +
+          (ay - by) ** 2 +
+          (pos[i * 3 + 2] - pos[j * 3 + 2]) ** 2
+        );
 
-        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-        if (
-          dist < MAX_DISTANCE &&
-          directionalBias > 2 &&
-          towardMouse > -5 &&
-          mouseDist < 50
-        ) {
+        if (dist < MAX_DISTANCE) {
           const isTrunk = trunkNodes.current.has(i);
 
           connections.current.push({
@@ -202,9 +197,9 @@ export default function ParticlesNetwork() {
             j,
             progress: 0,
             life: 1,
-            speed: isTrunk ? 0.008 : 0.004,
-            strength: isTrunk ? 2.5 : 0.7,
-            energy: 0, // 🧠
+            speed: isTrunk ? 0.01 : 0.003,
+            strength: isTrunk ? 3.5 : 0.6,
+            energy: 0,
             key,
           });
 
@@ -215,7 +210,7 @@ export default function ParticlesNetwork() {
 
           activeNodes.current.add(j);
 
-          if (isTrunk && Math.random() > 0.1) {
+          if (isTrunk && Math.random() > 0.2) {
             trunkNodes.current.add(j);
           }
 
@@ -225,17 +220,14 @@ export default function ParticlesNetwork() {
     }
 
     // ======================
-    // ⚡ PULSOS ATIVAM CONEXÕES
+    // PULSE → ENERGY
     // ======================
     pulses.current.forEach((p) => {
       connections.current.forEach((c) => {
         const ax = pos[c.i * 3];
         const ay = pos[c.i * 3 + 1];
 
-        const dx = ax - p.position.x;
-        const dy = ay - p.position.y;
-
-        const dist = Math.sqrt(dx * dx + dy * dy);
+        const dist = Math.hypot(ax - p.position.x, ay - p.position.y);
 
         if (dist < 30) {
           c.energy = Math.max(c.energy, 0.4);
@@ -275,7 +267,6 @@ export default function ParticlesNetwork() {
 
       const glowSize = (0.3 + c.energy * 0.6) * c.strength;
 
-      // linha
       linePositions[index++] = ax;
       linePositions[index++] = ay;
       linePositions[index++] = az;
@@ -284,7 +275,6 @@ export default function ParticlesNetwork() {
       linePositions[index++] = py;
       linePositions[index++] = pz;
 
-      // glow ponta
       linePositions[index++] = px;
       linePositions[index++] = py;
       linePositions[index++] = pz;
@@ -323,7 +313,7 @@ export default function ParticlesNetwork() {
         <pointsMaterial
           map={texture}
           color="#00aaff"
-          size={0.8}
+          size={0.5}
           transparent
           depthWrite={false}
         />

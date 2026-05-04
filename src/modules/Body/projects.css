@@ -12,9 +12,9 @@
     background: #191919;
     border-radius: 35px;
     text-align: center;
-    padding: 40px 30px;
+    padding: 20px 30px;
     margin-top: -60px;
-    max-width: 80%;
+    max-width: 85%;
     transform: translate(10%);
     box-shadow: 0 0 3px #002425,
                 0 0 6px #002425,
@@ -27,23 +27,23 @@
     height: 10px;
     background-color: transparent;
     border-radius: 50%;
-    z-index: 10;
+    z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     transition: background-color 0.3s ease;
-    margin: -20px -20px 20px 0px;
+    margin: 0px -45px 0px -45px;
   }
-  .react-multiple-carousel__arrow:hover {
+  /* /* .react-multiple-carousel__arrow:hover {
     background-color: #468d4f; 
-  }
-  .react-multiple-carousel__arrow--left {
-    margin: 0 -30px;
+  } */
+  /* .react-multiple-carousel__arrow--left {
+    margin: 0 -10px;
   }
   .react-multiple-carousel__arrow--right {
-    margin: 0 -20px;
-  }
+    margin: 0 -10px;
+  } */
   .react-multi-carousel-item {
     padding: 0 0 0 0;
     box-sizing: border-box;
@@ -58,8 +58,8 @@
       font-size: 12px;
       letter-spacing: 0.8px;
       line-height: 1.5em;
-      margin: 14px 0 75px 0;
-      padding: 30px 30px 0 30px;
+      margin:  0 0 15px 0;
+      padding: 15px 0 15px 0;
       text-align: justify;
       text-indent: 20px;
   }
@@ -68,13 +68,13 @@
     color: #468d4f;
   }
   .project-slider {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     position: relative;
   }
   .project-slider .item {
     max-width: 80%;
-    margin: 0 auto;
+    margin: 0 auto 15px auto;
   }
   .project-slider .item img {
     width: 30%;
