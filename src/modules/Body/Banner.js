@@ -60,12 +60,12 @@ const tick = () => {
                             <h1><span className="wrap">{text}</span></h1>
                         </div>
                         <p> Sou uma Agrônoma apaixonada por tecnologia e inovação. 
-                            Minha jornada na programação começou de forma curiosa, por meio de 
-                            <i>hackathons</i> e como <i>co-founder</i> de uma AgriTech, 
+                            Minha jornada na programação começou de forma curiosa, por meio 
+                            de  <i>hackathons</i> e como <i>co-founder</i> de uma AgriTech, 
                             onde mergulhei no desenvolvimento mobile e na cultura <i>DevOps</i>. 
                             Desde então, venho expandindo meu conhecimento para transformar ideias 
-                            em soluções digitais escaláveis. Hoje, sou <i>Software Engineer</i> na 
-                            ZarpSystem e também atuo de forma autônoma como consultora de transformação digital, 
+                            em soluções digitais escaláveis. Hoje, sou <i>Software Engineer</i>, 
+                            empreendedora e atuo como consultora de transformação digital, 
                             ajudando empresas a otimizar processos e impulsionar rumo a inovação.</p>
                     </Col>
                 </Row>

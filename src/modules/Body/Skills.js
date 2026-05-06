@@ -7,6 +7,8 @@ import engineer from '../../assets/img/engineerSoftware_lineWhite.png';
 import business from '../../assets/img/business_lineWhite.png';
 import esg from '../../assets/img/esg_lineWhite.png';
 import amb from '../../assets/img/managerAmb_lineWhite.png';
+import ml from '../../assets/img/ml.png';
+import bebidas from '../../assets/img/bebidas.png';
 
 export const Skills = () => {
     const responsive = {
@@ -34,7 +36,7 @@ export const Skills = () => {
                     <Col>
                         <div className="skill-bx">
                             <h2>Formações</h2>
-                            <p> Formada em MBA em Engenharia de Software pela UTFPR e MBA em Digital Business pela ESALQ/USP, 
+                            <p> Formada em MBA em Engenharia de Software pela UTFPR, cursando ML Engineer na FIAP e Tecnologia em Bebidas na UFG, 
                                 desenvolvi uma visão ampla sobre a transformação digital em uma sociedade cada vez mais tecnológica. 
                                 Acredito que, mais do que simplesmente criar novos produtos, é essencial construir soluções 
                                 que inspirem confiança, garantam segurança, promovam eficiência e impulsionem a sustentabilidade.</p>
@@ -48,8 +50,16 @@ export const Skills = () => {
                                     <h5>Engenheira de Software</h5>
                                 </div>
                                 <div className="item">
+                                    <img src={ml} alt="Image"/>
+                                    <h5>Machine Learning Engineer</h5>
+                                </div>
+                                <div className="item">
                                     <img src={business} alt="Image"/>
                                     <h5>Especialista em Negócios Digitais</h5>
+                                </div>
+                                <div className="item">
+                                    <img src={bebidas} alt="Image"/>
+                                    <h5>Tecnologia em Bebidas</h5>
                                 </div>
                                 <div className="item">
                                     <img src={esg} alt="Image"/>

@@ -30,9 +30,9 @@
   .banner-content .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    padding-top: 130px;
-    margin-left: -250px;
+    justify-content: left;
+    padding-top: 25%;
+    margin-left: 8%;
   }
   .banner .tagline {
     font-weight: 700;

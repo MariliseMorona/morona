@@ -81,4 +81,6 @@
 .expo-col-card {
   max-width: 25%;
   margin: 2px;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
 }
