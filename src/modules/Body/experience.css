@@ -5,6 +5,7 @@
   align-items: center;
   width: 100%;
   min-height: 90vh;
+  isolation: isolate;
   position: relative;
   background-color: black;
 }
@@ -75,7 +76,7 @@
   width: 100%;
   padding: 15px 0 15px 0;
   position: relative;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .expo-col-card {

@@ -27,9 +27,7 @@ export const NavBar = () => {
         setActiveLink(value);
     }
 
-    const autoOpenAlink = (url = ``) => {
-        window.open(url, "open testing page in a same tab page");
-      }
+    const getPersonalSocialPaddingStart = () => 5;
 
     return (
         <Navbar expand="lg" className={scrolled ? "scrolled" : ""}>
@@ -48,10 +46,41 @@ export const NavBar = () => {
                         <Nav.Link href="#projects" className={activeLink === 'projects' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('projects')}>Projetos</Nav.Link>
                     </Nav>
                     <span className="navbar-text">
-                        <div className="social-icon">
-                            <a href="#"><img src={iconLinkedin} alt="" target="_self" onClick= {() => autoOpenAlink('https://www.linkedin.com/in/marilise-morona/')}/></a>
-                            {/* <a href="#"><img src={iconInstagram} alt=""/></a>
-                            <a href="#"><img src={iconFacebook} alt=""/></a> */}
+                        <div className="social-icon" style={{ paddingInlineStart: getPersonalSocialPaddingStart() }}>
+                            <a
+                                href="https://www.linkedin.com/in/marilise-morona/"
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label="LinkedIn"
+                            >
+                                <img src={iconLinkedin} alt="LinkedIn" />
+                            </a>
+                            <a
+                                href="https://www.instagram.com/"
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label="Instagram"
+                            >
+                                <img src={iconInstagram} alt="Instagram" />
+                            </a>
+                            <a
+                                href="https://www.facebook.com/"
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label="Facebook"
+                            >
+                                <img src={iconFacebook} alt="Facebook" />
+                            </a>
+                            <a
+                                href="https://github.com/"
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label="GitHub"
+                            >
+                                <svg viewBox="0 0 24 24" role="img" aria-hidden="true" focusable="false">
+                                    <path d="M12 0.5C5.73 0.5.75 5.64.75 12.02c0 5.11 3.2 9.45 7.64 10.98.56.1.77-.25.77-.55v-2.05c-3.11.69-3.77-1.53-3.77-1.53-.51-1.33-1.25-1.69-1.25-1.69-1.02-.71.08-.69.08-.69 1.13.08 1.72 1.18 1.72 1.18 1 .176 1.54 1.05 1.54 1.05.9 1.58 2.36 1.12 2.94.86.1-.67.35-1.12.64-1.38-2.48-.29-5.09-1.26-5.09-5.61 0-1.24.43-2.25 1.13-3.05-.11-.29-.49-1.46.11-3.04 0 0 .92-.3 3.02 1.17.88-.25 1.82-.37 2.76-.38.94.01 1.88.13 2.76.38 2.1-1.47 3.02-1.17 3.02-1.17.6 1.58.22 2.75.11 3.04.7.8 1.13 1.81 1.13 3.05 0 4.36-2.61 5.32-5.1 5.61.36.32.68.95.68 1.92v2.85c0 .3.2.66.78.55 4.43-1.53 7.63-5.87 7.63-10.98C23.25 5.64 18.27.5 12 .5z" />
+                                </svg>
+                            </a>
                         </div>
                         <button className="navbar-button" onClick={() => window.open('https://wa.me/5541992649585?text=Olá, gostaria de saber mais sobre seus serviços!')}><span>Contato</span></button>
                     </span>
