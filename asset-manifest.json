@@ -1,14 +1,18 @@
 {
   "files": {
-    "main.css": "/morona/static/css/main.df9be313.css",
-    "main.js": "/morona/static/js/main.6963cc1d.js",
-    "static/js/453.7defab31.chunk.js": "/morona/static/js/453.7defab31.chunk.js",
+    "main.css": "/morona/static/css/main.9188a869.css",
+    "main.js": "/morona/static/js/main.dffea2ca.js",
+    "static/js/453.7b2aa4ab.chunk.js": "/morona/static/js/453.7b2aa4ab.chunk.js",
     "static/media/banner_home_bg.png": "/morona/static/media/banner_home_bg.7938645eb6fbfc5ba45d.png",
     "static/media/banner_home.png": "/morona/static/media/banner_home.36e952f251b2a7a77277.png",
     "static/media/Montserrat-Regular.ttf": "/morona/static/media/Montserrat-Regular.ceb11275ab638627a643.ttf",
+    "static/media/plant.png": "/morona/static/media/plant.7cd308862418bb47c831.png",
+    "static/media/gvsig.png": "/morona/static/media/gvsig.cf550e64322d8418621b.png",
     "static/media/langSwift.png": "/morona/static/media/langSwift.a7e322299f24742d0cc1.png",
     "static/media/managerAmb_lineWhite.png": "/morona/static/media/managerAmb_lineWhite.f015c44a319f6927ce4c.png",
+    "static/media/ml.png": "/morona/static/media/ml.cee7043a38bd46cc31e0.png",
     "static/media/langJava.png": "/morona/static/media/langJava.5d7ebc9b417df03e5ba2.png",
+    "static/media/bebidas.png": "/morona/static/media/bebidas.bc744333c8850c623189.png",
     "static/media/logo_color.png": "/morona/static/media/logo_color.8d3c6a9c336f05fa640c.png",
     "static/media/agritech_lineWhite.png": "/morona/static/media/agritech_lineWhite.ce1f8aabfb2098040665.png",
     "static/media/agritech.png": "/morona/static/media/agritech.01a9de8f12a05212690e.png",
@@ -27,12 +31,12 @@
     "static/media/revicons.ttf": "/morona/static/media/revicons.57fd05d4ae650374c8de.ttf",
     "static/media/revicons.woff": "/morona/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/morona/index.html",
-    "main.df9be313.css.map": "/morona/static/css/main.df9be313.css.map",
-    "main.6963cc1d.js.map": "/morona/static/js/main.6963cc1d.js.map",
-    "453.7defab31.chunk.js.map": "/morona/static/js/453.7defab31.chunk.js.map"
+    "main.9188a869.css.map": "/morona/static/css/main.9188a869.css.map",
+    "main.dffea2ca.js.map": "/morona/static/js/main.dffea2ca.js.map",
+    "453.7b2aa4ab.chunk.js.map": "/morona/static/js/453.7b2aa4ab.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.df9be313.css",
-    "static/js/main.6963cc1d.js"
+    "static/css/main.9188a869.css",
+    "static/js/main.dffea2ca.js"
   ]
 }
