@@ -24,18 +24,14 @@
 .last-footer {
     display: flex;
     flex-direction: column;
-    background-image: url('../../assets/img/banner_home.png');
-    /* background: #151515; */
+    background: rgba(10, 12, 20, 0.85);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     align-items: center;
     justify-content: center;
     padding: 20px 0 20px 0;
     text-align: center;
     margin-top: 0;
-    /* padding: 260px 0 100px 0; */
-    background-image: url('../../assets/img/banner_home.png');
-    background-position: top center;
-    background-size: cover;
-    background-repeat: no-repeat;
 }
 .last-footer p {
     margin-bottom: 0;

@@ -2,9 +2,9 @@ import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-const PARTICLE_COUNT = 100;
-const MAX_DISTANCE = 30;
-const MAX_CONNECTIONS_PER_NODE = 2;
+const PARTICLE_COUNT = 70;
+const MAX_DISTANCE = 42;
+const MAX_CONNECTIONS_PER_NODE = 3;
 
 export default function ParticlesNetwork() {
   const pointsRef = useRef();
@@ -14,34 +14,56 @@ export default function ParticlesNetwork() {
   const connectionMap = useRef(new Map());
   const connectionCount = useRef(new Array(PARTICLE_COUNT).fill(0));
 
-  // ======================
-  // INIT PARTICLES
-  // ======================
+  const starMagnitudes = useMemo(() => {
+    const m = new Float32Array(PARTICLE_COUNT);
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const r = Math.random();
+      if (r < 0.08) m[i] = 3;
+      else if (r < 0.28) m[i] = 2.2;
+      else if (r < 0.6) m[i] = 1.5;
+      else m[i] = 1;
+    }
+    return m;
+  }, []);
+
+  const maxConnectionsByMagnitude = useMemo(() => {
+    const m = new Uint8Array(PARTICLE_COUNT);
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const mag = starMagnitudes[i];
+      if (mag >= 2.2) m[i] = Math.max(MAX_CONNECTIONS_PER_NODE + 2, 5);
+      else if (mag >= 1.5) m[i] = MAX_CONNECTIONS_PER_NODE + 1;
+      else m[i] = MAX_CONNECTIONS_PER_NODE;
+    }
+    return m;
+  }, [starMagnitudes]);
+
   const { positions, velocities } = useMemo(() => {
     const positions = new Float32Array(PARTICLE_COUNT * 3);
     const velocities = new Float32Array(PARTICLE_COUNT * 3);
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-      positions[i * 3] = Math.random() * 40;
+      positions[i * 3] = (Math.random() - 0.35) * 60;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 80;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 80;
 
-      velocities[i * 3] = (Math.random() - 0.5) * 0.02;
-      velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.02;
-      velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.02;
+      velocities[i * 3] = (Math.random() - 0.5) * 0.003;
+      velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.003;
+      velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.003;
     }
 
     return { positions, velocities };
   }, []);
+
+  const basePositions = useMemo(
+    () => new Float32Array(positions),
+    [positions]
+  );
 
   const linePositions = useMemo(
     () => new Float32Array(PARTICLE_COUNT * PARTICLE_COUNT * 6),
     []
   );
 
-  // ======================
-  // TEXTURE
-  // ======================
   const texture = useMemo(() => {
     const size = 64;
     const canvas = document.createElement("canvas");
@@ -69,100 +91,107 @@ export default function ParticlesNetwork() {
     return new THREE.CanvasTexture(canvas);
   }, []);
 
-  // ======================
-  // ANIMATION
-  // ======================
   useFrame((state) => {
     const time = state.clock.elapsedTime;
     const pos = pointsRef.current.geometry.attributes.position.array;
 
-    // ======================
-    // DEPTH + PARALLAX
-    // ======================
+    const rotY = time * 0.012;
+    const cosY = Math.cos(rotY);
+    const sinY = Math.sin(rotY);
+    const rotX = Math.sin(time * 0.008) * 0.12;
+    const cosX = Math.cos(rotX);
+    const sinX = Math.sin(rotX);
+
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       const ix = i * 3;
 
-      let x = pos[ix];
-      let y = pos[ix + 1];
-      let z = pos[ix + 2];
+      let x = basePositions[ix];
+      let y = basePositions[ix + 1];
+      let z = basePositions[ix + 2];
 
-      // profundidade viva
-      z += Math.sin(time * 0.3 + i) * 0.02;
+      x += Math.sin(time * 0.05 + i * 0.13) * 0.15;
+      y += Math.cos(time * 0.045 + i * 0.17) * 0.15;
+      z += Math.sin(time * 0.06 + i * 0.11) * 0.1;
 
-      // normaliza z (-40 → 40)
-      const depthNorm = (z + 40) / 80;
+      x += velocities[ix] * 0.25;
+      y += velocities[ix + 1] * 0.25;
+      z += velocities[ix + 2] * 0.25;
 
-      // parallax (longe = move menos)
-      const parallax = 1 - depthNorm;
+      const x1 = x * cosY - z * sinY;
+      const z1 = x * sinY + z * cosY;
+      const y1 = y * cosX - z1 * sinX;
+      const z2 = y * sinX + z1 * cosX;
 
-      pos[ix] =
-        x +
-        (velocities[ix] + Math.sin(time + i) * 0.002) * parallax;
+      pos[ix] = x1;
+      pos[ix + 1] = y1;
+      pos[ix + 2] = z2;
 
-      pos[ix + 1] =
-        y +
-        (velocities[ix + 1] + Math.cos(time + i) * 0.002) * parallax;
-
-      pos[ix + 2] = z;
-
-      // bounce leve
-      if (Math.abs(pos[ix]) > 40) velocities[ix] *= -1;
-      if (Math.abs(pos[ix + 1]) > 40) velocities[ix + 1] *= -1;
-      if (Math.abs(pos[ix + 2]) > 40) velocities[ix + 2] *= -1;
+      if (Math.abs(basePositions[ix]) > 40) velocities[ix] *= -1;
+      if (Math.abs(basePositions[ix + 1]) > 40) velocities[ix + 1] *= -1;
+      if (Math.abs(basePositions[ix + 2]) > 40) velocities[ix + 2] *= -1;
     }
 
     pointsRef.current.geometry.attributes.position.needsUpdate = true;
 
-    // ======================
-    // CONNECTION SPAWN
-    // ======================
+    const spawnAttempts = Math.random() < 0.55 ? 1 : 0;
 
-    const spawnRate =
-      1 + Math.floor((Math.sin(time * 0.3) + 1) * 2);
-
-    for (let k = 0; k < spawnRate; k++) {
-      const i = Math.floor(Math.random() * PARTICLE_COUNT);
-      const j = Math.floor(Math.random() * PARTICLE_COUNT);
-
-      if (i === j) continue;
-      if (connectionCount.current[i] >= MAX_CONNECTIONS_PER_NODE) continue;
-      if (connectionCount.current[j] >= MAX_CONNECTIONS_PER_NODE) continue;
-
-      const key = i < j ? `${i}-${j}` : `${j}-${i}`;
-
-      if (connectionMap.current.has(key)) continue;
-
-      const dx = pos[i * 3] - pos[j * 3];
-      const dy = pos[i * 3 + 1] - pos[j * 3 + 1];
-      const dz = pos[i * 3 + 2] - pos[j * 3 + 2];
-
-      const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-      if (dist < MAX_DISTANCE) {
-        connections.current.push({
-          i,
-          j,
-          progress: 0,
-          life: 0.8 + Math.random() * 0.5,
-          speed: 0.005 + Math.random() * 0.01,
-          key,
-        });
-
-        connectionCount.current[i]++;
-        connectionCount.current[j]++;
-
-        connectionMap.current.set(key, true);
+    for (let k = 0; k < spawnAttempts; k++) {
+      const candidates = [];
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        if (connectionCount.current[i] < maxConnectionsByMagnitude[i]) {
+          candidates.push(i);
+        }
       }
+      if (candidates.length < 2) break;
+
+      const i = candidates[Math.floor(Math.random() * candidates.length)];
+
+      let bestJ = -1;
+      let bestDist = MAX_DISTANCE;
+
+      for (let j = 0; j < PARTICLE_COUNT; j++) {
+        if (j === i) continue;
+        if (connectionCount.current[j] >= maxConnectionsByMagnitude[j]) continue;
+
+        const key = i < j ? `${i}-${j}` : `${j}-${i}`;
+        if (connectionMap.current.has(key)) continue;
+
+        const dx = pos[i * 3] - pos[j * 3];
+        const dy = pos[i * 3 + 1] - pos[j * 3 + 1];
+        const dz = pos[i * 3 + 2] - pos[j * 3 + 2];
+        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestJ = j;
+        }
+      }
+
+      if (bestJ === -1) continue;
+
+      const j = bestJ;
+      const key = i < j ? `${i}-${j}` : `${j}-${i}`;
+      const magAvg = (starMagnitudes[i] + starMagnitudes[j]) * 0.5;
+
+      connections.current.push({
+        i,
+        j,
+        progress: 0,
+        life: 3.2 + Math.random() * 2.4 + magAvg * 0.8,
+        speed: 0.0022 + Math.random() * 0.0018 + 0.0006 * (4 - magAvg),
+        key,
+      });
+
+      connectionCount.current[i]++;
+      connectionCount.current[j]++;
+      connectionMap.current.set(key, true);
     }
 
-    // ======================
-    // DRAW LINES (COM DEPTH)
-    // ======================
     let index = 0;
 
     connections.current.forEach((c) => {
       c.progress += c.speed;
-      c.life -= 0.003;
+      c.life -= 0.0012;
 
       if (c.progress > 1) c.progress = 1;
 
@@ -183,7 +212,6 @@ export default function ParticlesNetwork() {
       const py = ay + (by - ay) * t;
       const pz = az + (bz - az) * t;
 
-      // linha principal
       linePositions[index++] = ax;
       linePositions[index++] = ay;
       linePositions[index++] = az;
@@ -192,34 +220,29 @@ export default function ParticlesNetwork() {
       linePositions[index++] = py;
       linePositions[index++] = pz;
 
-      // glow ponta
-      const glowSize = 0.5;
+      const headOffset = 0.08;
+      const dxh = bx - ax;
+      const dyh = by - ay;
+      const dzh = bz - az;
+      const lenh = Math.sqrt(dxh * dxh + dyh * dyh + dzh * dzh) || 1;
 
       linePositions[index++] = px;
       linePositions[index++] = py;
       linePositions[index++] = pz;
 
-      linePositions[index++] =
-        px + (Math.random() - 0.5) * glowSize;
-      linePositions[index++] =
-        py + (Math.random() - 0.5) * glowSize;
-      linePositions[index++] =
-        pz + (Math.random() - 0.5) * glowSize;
+      linePositions[index++] = px + (dxh / lenh) * headOffset;
+      linePositions[index++] = py + (dyh / lenh) * headOffset;
+      linePositions[index++] = pz + (dzh / lenh) * headOffset;
     });
 
     linesRef.current.geometry.setDrawRange(0, index / 3);
     linesRef.current.geometry.attributes.position.needsUpdate = true;
 
-    // ======================
-    // CLEANUP
-    // ======================
     connections.current = connections.current.filter((c) => {
       if (c.life <= 0) {
         connectionMap.current.delete(c.key);
-
         connectionCount.current[c.i]--;
         connectionCount.current[c.j]--;
-
         return false;
       }
       return true;
@@ -228,7 +251,6 @@ export default function ParticlesNetwork() {
 
   return (
     <>
-      {/* PARTICLES */}
       <points ref={pointsRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -250,7 +272,6 @@ export default function ParticlesNetwork() {
         />
       </points>
 
-      {/* LINES */}
       <lineSegments ref={linesRef}>
         <bufferGeometry>
           <bufferAttribute
@@ -261,10 +282,10 @@ export default function ParticlesNetwork() {
           />
         </bufferGeometry>
 
-        <lineBasicMaterial
-          color="#38bdf8"
-          transparent
-          opacity={0.15}
+        <lineBasicMaterial 
+        color="#38bdf8" 
+        transparent 
+        opacity={0.15} 
         />
       </lineSegments>
     </>

@@ -1,5 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import NightSky from './modules/Animations/NightSky';
 import { NavBar } from './modules/Header/NavBar';
 import { Banner } from './modules/Body/Banner';
 import { Skills } from './modules/Body/Skills';
@@ -11,6 +12,7 @@ import { Footer } from './modules/Footer/Footer';
 function App() {
   return (
     <div className="App">
+      <NightSky />
       <NavBar />
       <Banner/>
       <Skills />

@@ -7,7 +7,7 @@
   min-height: 90vh;
   isolation: isolate;
   position: relative;
-  background-color: black;
+  background-color: transparent;
 }
 .experience .row {
   display: flex;
@@ -76,7 +76,7 @@
   width: 100%;
   padding: 15px 0 15px 0;
   position: relative;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
 }
 
 .expo-col-card {

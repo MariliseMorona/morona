@@ -9,7 +9,9 @@
   box-sizing: border-box
 }
 .skill-bx {
-  background: #191919;
+  background: rgba(18, 20, 30, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border-radius: 35px;
   text-align: center;
   padding: 20px 10px;

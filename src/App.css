@@ -25,7 +25,7 @@ body {
   font-weight: 400;
   overflow-x: hidden;
   position: relative;
-  background-color: #000000 !important;
+  background-color: transparent !important;
   font-family: 'Montserrat' !important;
 }
 /*282c34*/
