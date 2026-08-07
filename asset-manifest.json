@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/morona/static/css/main.9188a869.css",
-    "main.js": "/morona/static/js/main.dffea2ca.js",
+    "main.css": "/morona/static/css/main.a3ca7858.css",
+    "main.js": "/morona/static/js/main.84dc8603.js",
     "static/js/453.7b2aa4ab.chunk.js": "/morona/static/js/453.7b2aa4ab.chunk.js",
     "static/media/banner_home_bg.png": "/morona/static/media/banner_home_bg.7938645eb6fbfc5ba45d.png",
     "static/media/banner_home.png": "/morona/static/media/banner_home.36e952f251b2a7a77277.png",
@@ -31,12 +31,12 @@
     "static/media/revicons.ttf": "/morona/static/media/revicons.57fd05d4ae650374c8de.ttf",
     "static/media/revicons.woff": "/morona/static/media/revicons.e8746a624ed098489406.woff",
     "index.html": "/morona/index.html",
-    "main.9188a869.css.map": "/morona/static/css/main.9188a869.css.map",
-    "main.dffea2ca.js.map": "/morona/static/js/main.dffea2ca.js.map",
+    "main.a3ca7858.css.map": "/morona/static/css/main.a3ca7858.css.map",
+    "main.84dc8603.js.map": "/morona/static/js/main.84dc8603.js.map",
     "453.7b2aa4ab.chunk.js.map": "/morona/static/js/453.7b2aa4ab.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9188a869.css",
-    "static/js/main.dffea2ca.js"
+    "static/css/main.a3ca7858.css",
+    "static/js/main.84dc8603.js"
   ]
 }
