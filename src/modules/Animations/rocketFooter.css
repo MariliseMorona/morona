@@ -13,39 +13,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-}
-
-.rocket-footer-sky {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(70% 60% at 80% 10%, rgba(56, 189, 248, 0.10), transparent 62%),
-    radial-gradient(55% 60% at 10% 90%, rgba(147, 51, 234, 0.10), transparent 62%);
-}
-
-.rocket-star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 0 6px rgba(186, 230, 253, 0.9);
-  opacity: 0.5;
-  animation-name: rocketStarTwinkle;
-  animation-duration: 2.2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-}
-
-.rocket-star-1 { width: 1.5px; height: 1.5px; opacity: 0.35; }
-.rocket-star-2 { width: 2px; height: 2px; opacity: 0.55; }
-.rocket-star-3 { width: 2.5px; height: 2.5px; opacity: 0.7; }
-.rocket-star-4 { width: 3px; height: 3px; opacity: 0.85; }
-.rocket-star-5 { width: 1.8px; height: 1.8px; opacity: 0.5; }
-
-@keyframes rocketStarTwinkle {
-  0%, 100% { opacity: 0.2; transform: scale(0.9); }
-  50%      { opacity: 1;   transform: scale(1.15); }
+  background: transparent;
 }
 
 .rocket-footer-rocket {
@@ -54,17 +22,13 @@
   left: 0;
   width: 92px;
   height: 92px;
-  filter: drop-shadow(0 14px 24px rgba(14, 165, 233, 0.45))
-          drop-shadow(0 0 10px rgba(186, 230, 253, 0.55));
+  perspective: 600px;
+  filter:
+    drop-shadow(0 2px 4px rgba(2, 6, 23, 0.65))
+    drop-shadow(0 10px 20px rgba(14, 165, 233, 0.28))
+    drop-shadow(0 0 10px rgba(186, 230, 253, 0.38));
   will-change: transform;
   transform-origin: 50% 60%;
-}
-
-.rocket-footer-track--wide .rocket-footer-sky {
-  background:
-    radial-gradient(75% 70% at 100% 0%, rgba(56, 189, 248, 0.12), transparent 60%),
-    radial-gradient(65% 70% at 0% 100%, rgba(147, 51, 234, 0.10), transparent 60%),
-    radial-gradient(50% 45% at 50% 0%, rgba(96, 165, 250, 0.08), transparent 60%);
 }
 
 .rocket-footer-svg {
@@ -73,55 +37,64 @@
   width: 100%;
   height: 100%;
   transform-origin: 50% 55%;
+  transform-style: preserve-3d;
+  animation: rocketTilt3d 7s ease-in-out infinite;
   rotate: 90deg;
+}
+
+@keyframes rocketTilt3d {
+  0%, 100% { transform: rotateX(8deg)  rotateY(-12deg) rotateZ(-2deg); }
+  25%      { transform: rotateX(4deg)  rotateY(-4deg)  rotateZ(-1deg); }
+  50%      { transform: rotateX(12deg) rotateY(8deg)   rotateZ(2deg);  }
+  75%      { transform: rotateX(2deg)  rotateY(-6deg)  rotateZ(0deg);  }
 }
 
 .rocket-trail {
   position: absolute;
-  top: 58%;
+  top: 59%;
   right: 92%;
-  width: 100px;
-  height: 16px;
+  width: 96px;
+  height: 8px;
   pointer-events: none;
   z-index: 2;
 }
 
 .rocket-trail-core {
   position: absolute;
-  inset: 40% 0 40% 0;
+  inset: 45% 0 45% 0;
   border-radius: 999px;
   background: linear-gradient(
     90deg,
     rgba(56, 189, 248, 0) 0%,
-    rgba(186, 230, 253, 0.28) 35%,
-    rgba(254, 240, 138, 0.85) 75%,
-    rgba(251, 146, 60, 0.95) 100%
+    rgba(186, 230, 253, 0.16) 38%,
+    rgba(186, 230, 253, 0.45) 72%,
+    rgba(125, 211, 252, 0.55) 100%
   );
-  filter: blur(1.5px);
-  opacity: 0.9;
+  filter: blur(1.1px);
+  opacity: 0.78;
   animation-name: rocketTrailPulse;
-  animation-duration: 0.8s;
+  animation-duration: 0.9s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
 
 .rocket-trail-soft {
   position: absolute;
-  inset: 0;
+  inset: 15% 0 15% 0;
   border-radius: 999px;
   background: linear-gradient(
     90deg,
     rgba(186, 230, 253, 0) 0%,
-    rgba(14, 165, 233, 0.20) 40%,
-    rgba(249, 115, 22, 0.45) 100%
+    rgba(14, 165, 233, 0.10) 40%,
+    rgba(56, 189, 248, 0.22) 100%
   );
-  filter: blur(7px);
-  opacity: 0.9;
+  filter: blur(5px);
+  opacity: 0.75;
 }
 
 @keyframes rocketTrailPulse {
-  0%, 100% { transform: scaleX(1);   opacity: 0.85; }
-  50%      { transform: scaleX(1.15); opacity: 1; }
+  0%, 100% { transform: scaleX(1);    opacity: 0.7; }
+  50%      { transform: scaleX(1.12); opacity: 0.88; }
 }
 
 .rocket-smoke {
@@ -129,7 +102,7 @@
   left: -56px;
   top: 52%;
   width: 160px;
-  height: 70px;
+  height: 62px;
   pointer-events: none;
   z-index: 1;
 }
@@ -138,16 +111,16 @@
   position: absolute;
   left: 70%;
   top: 50%;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   border-radius: 999px;
   background: radial-gradient(
     circle at 30% 30%,
-    rgba(224, 242, 254, 0.95),
-    rgba(147, 197, 253, 0.45) 55%,
-    rgba(59, 130, 246, 0) 80%
+    rgba(224, 242, 254, 0.65),
+    rgba(147, 197, 253, 0.28) 58%,
+    rgba(59, 130, 246, 0) 82%
   );
-  filter: blur(2px);
+  filter: blur(2.5px);
   opacity: 0;
   animation-name: rocketPuff;
   animation-iteration-count: infinite;
@@ -155,41 +128,41 @@
 }
 
 .puff-1 {
-  width: 16px;
-  height: 16px;
-  animation-duration: 1.2s;
+  width: 12px;
+  height: 12px;
+  animation-duration: 1.25s;
   animation-delay: 0s;
 }
 .puff-2 {
-  width: 26px;
-  height: 26px;
-  animation-duration: 1.4s;
+  width: 20px;
+  height: 20px;
+  animation-duration: 1.45s;
   animation-delay: 0.3s;
 }
 .puff-3 {
-  width: 20px;
-  height: 20px;
-  animation-duration: 1.6s;
+  width: 16px;
+  height: 16px;
+  animation-duration: 1.65s;
   animation-delay: 0.55s;
 }
 .puff-4 {
-  width: 32px;
-  height: 32px;
-  animation-duration: 1.8s;
+  width: 24px;
+  height: 24px;
+  animation-duration: 1.85s;
   animation-delay: 0.85s;
 }
 
 @keyframes rocketPuff {
   0% {
-    opacity: 0.9;
+    opacity: 0.65;
     transform: translate3d(0, -50%, 0) scale(0.6);
   }
   60% {
-    opacity: 0.6;
+    opacity: 0.42;
   }
   100% {
     opacity: 0;
-    transform: translate3d(-150px, -30%, 0) scale(1.8);
+    transform: translate3d(-150px, -26%, 0) scale(1.75);
   }
 }
 

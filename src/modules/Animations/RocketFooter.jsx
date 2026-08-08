@@ -224,20 +224,6 @@ export const RocketFooter = () => {
 
   return (
     <div className="rocket-footer-track rocket-footer-track--wide" ref={trackRef} aria-hidden="true">
-      <div className="rocket-footer-sky">
-        {Array.from({ length: 34 }).map((_, i) => (
-          <span
-            key={i}
-            className={`rocket-star rocket-star-${(i % 5) + 1}`}
-            style={{
-              left: `${(i * 41) % 100}%`,
-              top: `${(i * 17) % 100}%`,
-              animationDelay: `${(i % 7) * 0.3}s`,
-            }}
-          />
-        ))}
-      </div>
-
       <div className="rocket-footer-rocket" ref={rocketRef}>
         <svg
           viewBox="0 0 120 120"
@@ -245,104 +231,243 @@ export const RocketFooter = () => {
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
-            <linearGradient id="rocketBody" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#e0f2fe" />
-              <stop offset="60%" stopColor="#7dd3fc" />
+            <linearGradient id="rocketStroke" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stopColor="#7dd3fc" />
+              <stop offset="50%" stopColor="#38bdf8" />
               <stop offset="100%" stopColor="#0ea5e9" />
             </linearGradient>
-            <linearGradient id="rocketWindow" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#fef3c7" />
-              <stop offset="100%" stopColor="#f59e0b" />
+            <filter id="rocketGlow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="1.2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+            <linearGradient id="rocketThrust" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="#bae6fd" stopOpacity="0.95" />
+              <stop offset="35%" stopColor="#7dd3fc" stopOpacity="0.55" />
+              <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
             </linearGradient>
-            <linearGradient id="rocketFin" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0%" stopColor="#60a5fa" />
-              <stop offset="100%" stopColor="#1d4ed8" />
-            </linearGradient>
-            <radialGradient id="rocketFlame" cx="50%" cy="0%" r="100%">
-              <stop offset="0%" stopColor="#fef08a" />
-              <stop offset="35%" stopColor="#f97316" />
-              <stop offset="80%" stopColor="#ef4444" stopOpacity="0.85" />
-              <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
-            </radialGradient>
           </defs>
 
-          <g>
-            <path
-              d="M60 10 C74 28 80 48 80 70 L80 86 L40 86 L40 70 C40 48 46 28 60 10 Z"
-              fill="url(#rocketBody)"
-              stroke="#bae6fd"
-              strokeWidth="1.2"
-            />
-            <path
-              d="M60 6 C74 26 80 46 80 68 L40 68 C40 46 46 26 60 6 Z"
-              fill="#e0f2fe"
-              opacity="0.35"
-            />
+          <g filter="url(#rocketGlow)">
+            <g className="rocket-depth rocket-depth-back" opacity="0.28">
+              <path
+                d="M60 10 C74 28 80 48 80 70 L80 86 L40 86 L40 70 C40 48 46 28 60 10 Z"
+                fill="none"
+                stroke="#7dd3fc"
+                strokeWidth="2.2"
+                strokeLinejoin="round"
+                transform="translate(-0.9, 1.2)"
+              />
+              <path
+                d="M40 82 L24 104 L40 98 Z"
+                fill="none"
+                stroke="#7dd3fc"
+                strokeWidth="2.0"
+                strokeLinejoin="round"
+                transform="translate(-0.8, 1.0)"
+              />
+              <path
+                d="M80 82 L96 104 L80 98 Z"
+                fill="none"
+                stroke="#7dd3fc"
+                strokeWidth="2.0"
+                strokeLinejoin="round"
+                transform="translate(-0.8, 1.0)"
+              />
+              <circle
+                cx="60"
+                cy="52"
+                r="9"
+                fill="none"
+                stroke="#7dd3fc"
+                strokeWidth="2.0"
+                transform="translate(-0.8, 1.0)"
+              />
+            </g>
 
-            <circle cx="60" cy="52" r="9" fill="url(#rocketWindow)" />
-            <circle cx="60" cy="52" r="9" fill="none" stroke="#0369a1" strokeWidth="1.4" />
-            <path d="M56 48 C57 50 59 51 60 51" stroke="#fff7ed" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+            <g className="rocket-depth rocket-depth-mid" opacity="0.5">
+              <path
+                d="M60 10 C74 28 80 48 80 70 L80 86 L40 86 L40 70 C40 48 46 28 60 10 Z"
+                fill="none"
+                stroke="url(#rocketStroke)"
+                strokeWidth="1.8"
+                strokeLinejoin="round"
+                transform="translate(-0.4, 0.55)"
+              />
+              <path
+                d="M40 82 L24 104 L40 98 Z"
+                fill="none"
+                stroke="url(#rocketStroke)"
+                strokeWidth="1.6"
+                strokeLinejoin="round"
+                transform="translate(-0.35, 0.5)"
+              />
+              <path
+                d="M80 82 L96 104 L80 98 Z"
+                fill="none"
+                stroke="url(#rocketStroke)"
+                strokeWidth="1.6"
+                strokeLinejoin="round"
+                transform="translate(-0.35, 0.5)"
+              />
+              <circle
+                cx="60"
+                cy="52"
+                r="9"
+                fill="none"
+                stroke="url(#rocketStroke)"
+                strokeWidth="1.6"
+                transform="translate(-0.35, 0.5)"
+              />
+            </g>
 
-            <path
-              d="M40 82 L24 104 L40 98 Z"
-              fill="url(#rocketFin)"
-              stroke="#1e3a8a"
-              strokeWidth="1"
-            />
-            <path
-              d="M80 82 L96 104 L80 98 Z"
-              fill="url(#rocketFin)"
-              stroke="#1e3a8a"
-              strokeWidth="1"
-            />
+            <g
+              className="rocket-outline"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              opacity="0.96"
+            >
+              <path
+                d="M60 10 C74 28 80 48 80 70 L80 86 L40 86 L40 70 C40 48 46 28 60 10 Z"
+                stroke="url(#rocketStroke)"
+                strokeWidth="1.2"
+              />
+              <path
+                d="M60 22 C70 36 74 52 74 70 L74 80 L46 80 L46 70 C46 52 50 36 60 22 Z"
+                stroke="#7dd3fc"
+                strokeWidth="0.9"
+                opacity="0.55"
+              />
+              <path
+                d="M60 6 C74 26 80 46 80 68 L40 68 C40 46 46 26 60 6 Z"
+                stroke="#e0f2fe"
+                strokeWidth="0.7"
+                opacity="0.45"
+              />
 
-            <path
-              d="M48 86 L42 96 L44 90 Z"
-              fill="#38bdf8"
-              opacity="0.85"
-            />
-            <path
-              d="M72 86 L78 96 L76 90 Z"
-              fill="#38bdf8"
-              opacity="0.85"
-            />
+              <path
+                d="M40 82 L24 104 L40 98 Z"
+                stroke="url(#rocketStroke)"
+                strokeWidth="1.2"
+              />
+              <path
+                d="M80 82 L96 104 L80 98 Z"
+                stroke="url(#rocketStroke)"
+                strokeWidth="1.2"
+              />
 
-            <g className="rocket-flames">
-              <ellipse cx="52" cy="96" rx="6" ry="14" fill="url(#rocketFlame)">
+              <path
+                d="M48 86 L42 96 L44 90 Z"
+                stroke="#7dd3fc"
+                strokeWidth="0.9"
+              />
+              <path
+                d="M72 86 L78 96 L76 90 Z"
+                stroke="#7dd3fc"
+                strokeWidth="0.9"
+              />
+
+              <circle
+                cx="60"
+                cy="52"
+                r="9"
+                stroke="url(#rocketStroke)"
+                strokeWidth="1.2"
+              />
+              <circle
+                cx="60"
+                cy="52"
+                r="5.4"
+                stroke="#e0f2fe"
+                strokeWidth="0.7"
+                opacity="0.55"
+              />
+              <path
+                d="M56 48 C57 50 59 51 60 51"
+                stroke="#e0f2fe"
+                strokeWidth="0.7"
+                opacity="0.75"
+              />
+
+              <path
+                d="M50 30 C54 42 56 50 56 56"
+                stroke="#bae6fd"
+                strokeWidth="0.8"
+                opacity="0.75"
+              />
+              <path
+                d="M70 30 C66 42 64 50 64 56"
+                stroke="#bae6fd"
+                strokeWidth="0.8"
+                opacity="0.75"
+              />
+            </g>
+
+            <g className="rocket-flames" opacity="0.82">
+              <path
+                d="M52 96 C50 112 48 116 52 118 C54 116 54 110 54 100 Z"
+                fill="url(#rocketThrust)"
+                stroke="none"
+              />
+              <path
+                d="M60 100 C57 120 57 124 60 126 C63 124 63 118 62 104 Z"
+                fill="url(#rocketThrust)"
+                stroke="none"
+              />
+              <path
+                d="M68 96 C70 112 72 116 68 118 C66 116 66 110 66 100 Z"
+                fill="url(#rocketThrust)"
+                stroke="none"
+              />
+              <path
+                d="M50 94 C46 108 44 114 50 118"
+                fill="none"
+                stroke="#bae6fd"
+                strokeWidth="0.9"
+                strokeLinecap="round"
+                opacity="0.8"
+              >
                 <animate
-                  attributeName="ry"
-                  values="14;18;16;20;14"
-                  dur="0.45s"
-                  repeatCount="indefinite"
-                />
-                <animate
-                  attributeName="opacity"
-                  values="1;0.85;0.95;0.9;1"
-                  dur="0.45s"
-                  repeatCount="indefinite"
-                />
-              </ellipse>
-              <ellipse cx="60" cy="100" rx="8" ry="18" fill="url(#rocketFlame)">
-                <animate
-                  attributeName="ry"
-                  values="18;22;20;24;18"
+                  attributeName="d"
+                  values="M50 94 C46 108 44 114 50 118;M50 94 C46 112 44 118 50 122;M50 94 C46 108 44 114 50 118"
                   dur="0.5s"
                   repeatCount="indefinite"
                 />
-              </ellipse>
-              <ellipse cx="68" cy="96" rx="6" ry="14" fill="url(#rocketFlame)">
+              </path>
+              <path
+                d="M70 94 C74 108 76 114 70 118"
+                fill="none"
+                stroke="#bae6fd"
+                strokeWidth="0.9"
+                strokeLinecap="round"
+                opacity="0.8"
+              >
                 <animate
-                  attributeName="ry"
-                  values="14;20;16;18;14"
+                  attributeName="d"
+                  values="M70 94 C74 108 76 114 70 118;M70 94 C74 112 76 118 70 122;M70 94 C74 108 76 114 70 118"
                   dur="0.55s"
                   repeatCount="indefinite"
                 />
-              </ellipse>
-            </g>
-
-            <g stroke="#e0f2fe" strokeWidth="1.2" strokeLinecap="round" opacity="0.8">
-              <path d="M50 30 C54 42 56 50 56 56" fill="none" />
-              <path d="M70 30 C66 42 64 50 64 56" fill="none" />
+              </path>
+              <path
+                d="M60 96 C58 114 58 120 60 124"
+                fill="none"
+                stroke="#e0f2fe"
+                strokeWidth="0.9"
+                strokeLinecap="round"
+                opacity="0.9"
+              >
+                <animate
+                  attributeName="d"
+                  values="M60 96 C58 114 58 120 60 124;M60 96 C58 120 58 126 60 130;M60 96 C58 114 58 120 60 124"
+                  dur="0.45s"
+                  repeatCount="indefinite"
+                />
+              </path>
             </g>
           </g>
         </svg>
