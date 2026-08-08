@@ -15,7 +15,7 @@ export default function NightSky() {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    const STAR_COUNT = Math.max(180);
+    const STAR_COUNT = Math.max(150);
     const SHOOTING_STAR_COUNT = 2;
 
     const stars = [];

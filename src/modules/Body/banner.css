@@ -1,10 +1,10 @@
 .banner {
     position: relative;
     width: 100vw;
-    min-height: 100vh;
+    min-height: 130vh;
     isolation: isolate;
     margin-top: 0;
-    padding: 390px 0 200px 0;
+    padding: 0 0 0 0;
     background-color: transparent;
     background-image: none;
     background-position: top center;
@@ -31,7 +31,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
-    padding-top: 25%;
+    padding-top: 20%;
     margin-left: 8%;
   }
   .banner .tagline {
@@ -53,7 +53,7 @@
     color: #d7e7d8;
   }
   .banner h1 {
-    font-size: 45px;
+    font-size: 35px;
     font-weight: 700;
     letter-spacing: 0.8px;
     line-height: 1;
@@ -69,8 +69,8 @@
   }
   .banner p {
     color: #d7e7d8;
-    font-size: 12px;
-    letter-spacing: 0.9px;
+    font-size: 14px;
+    letter-spacing: 1px;
     line-height: 1.5em;
     width: 100%;
     text-align: justify;

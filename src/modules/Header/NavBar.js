@@ -82,7 +82,7 @@ export const NavBar = () => {
                                 </svg>
                             </a>
                         </div>
-                        <button className="navbar-button" onClick={() => window.open('https://wa.me/5541992649585?text=Olá, gostaria de saber mais sobre seus serviços!')}><span>Contato</span></button>
+                        <button className="navbar-button" onClick={() => window.open('https://wa.me/5541988379881?text=Olá, gostaria de saber mais sobre seus serviços!')}><span>Contato</span></button>
                     </span>
                 </Navbar.Collapse>
             </Container>

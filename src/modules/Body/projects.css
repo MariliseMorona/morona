@@ -1,11 +1,11 @@
 .project {
-    padding: 0 0 80px 0;
+    padding: 0 0 0 0;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
-    min-height: 80vh;
+    min-height: 100vh;
     box-sizing: border-box
   }
   .project-bx {
@@ -14,15 +14,14 @@
     -webkit-backdrop-filter: blur(6px);
     border-radius: 35px;
     text-align: center;
-    padding: 20px 30px;
-    margin-top: -60px;
+    padding: 50px 30px;
     max-width: 85%;
     transform: translate(10%);
-    box-shadow: 0 0 3px #002425,
-                0 0 6px #002425,
-                0 0 9px #002425,
-                0 0 12px #002425,
-                0 0 15px #002425;
+    box-shadow: 0 0 3px #001a25,
+                0 0 6px #001a25,
+                0 0 9px #001a25,
+                0 0 12px #001a25,
+                0 0 15px #001a25;
   }
   .react-multiple-carousel__arrow {
     width: 10px;
@@ -73,6 +72,7 @@
     width: 100%;
     margin: 0 auto;
     position: relative;
+    padding-top: 30px;
   }
   .project-slider .item {
     max-width: 80%;

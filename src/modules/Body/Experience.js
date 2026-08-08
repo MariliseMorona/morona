@@ -121,13 +121,13 @@ export const Experience = () => {
                         <TrackVisibility>
                         {({ isVisible }) => 
                         <div className={isVisible ? "animate_animated animate_fadeIn" : ""}>
-                             <Col sx={12}>
+                             <Col sx={12} style={{ marginBottom: "8px" }}>
                                 <h2>Experiências</h2>
                             </Col>
-                            <Row>
+                            <Row style={{ paddingTop: 50 }}>
                                 <Col sx={12}>
                                 <Tab.Container id="experiences-tabs" defaultActiveKey="first" unmountOnExit={false}>
-                                    <Nav variant="pills" className="nav-pills mb-5 justify-content-center align-items-center" id="pills-tab">
+                                    <Nav variant="pills" className="nav-pills justify-content-center align-items-center" id="pills-tab" style={{ marginBottom: 0 }}>
                                         <Nav.Item>
                                             <Nav.Link eventKey="first">Desenvolvimento</Nav.Link>
                                         </Nav.Item>
@@ -140,7 +140,7 @@ export const Experience = () => {
                                     </Nav>
                                     <Tab.Content className="exp-col">
                                         <Tab.Pane eventKey="first">
-                                            <Row>
+                                            <Row style={{ paddingTop: 30 }}>
                                                 <Col sx={12}>
                                                     <Row>
                                                     {

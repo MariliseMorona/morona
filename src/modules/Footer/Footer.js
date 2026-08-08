@@ -1,9 +1,11 @@
 import './footer.css';
 import { Row, Col } from "react-bootstrap";
+import { RocketFooter } from "../Animations/RocketFooter";
 
 export const Footer = () => {
     return (
-        <>
+        <div className="footer-wrapper">
+            <RocketFooter />
             <div className="footer">
                 <div className="container">
                     <Row>
@@ -28,8 +30,8 @@ export const Footer = () => {
                 </div>
             </div>
             <div className='last-footer'>
-                <p>Design by Marilise Morona</p>
+                <p className="last-footer-text">Design by Marilise Morona</p>
             </div>
-        </>
+        </div>
     );
 }

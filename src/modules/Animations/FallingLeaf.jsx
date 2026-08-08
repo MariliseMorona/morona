@@ -2,7 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
-const LEAF_COUNT = 25;
+const LEAF_COUNT = 15;
 
 export default function FallingLeaf() {
   const groupRef = useRef();
@@ -348,7 +348,7 @@ export default function FallingLeaf() {
                 <lineBasicMaterial
                   color="#b8d89a"
                   transparent
-                  opacity={0.65}
+                  opacity={0.15}
                 />
               </line>
             )
