@@ -22,7 +22,6 @@
   left: 0;
   width: 92px;
   height: 92px;
-  perspective: 600px;
   filter:
     drop-shadow(0 2px 4px rgba(2, 6, 23, 0.65))
     drop-shadow(0 10px 20px rgba(14, 165, 233, 0.28))
@@ -31,27 +30,18 @@
   transform-origin: 50% 60%;
 }
 
-.rocket-footer-svg {
+.rocket-footer-canvas {
   position: relative;
   z-index: 3;
-  width: 100%;
-  height: 100%;
-  transform-origin: 50% 55%;
-  transform-style: preserve-3d;
-  animation: rocketTilt3d 7s ease-in-out infinite;
-  rotate: 90deg;
-}
-
-@keyframes rocketTilt3d {
-  0%, 100% { transform: rotateX(8deg)  rotateY(-12deg) rotateZ(-2deg); }
-  25%      { transform: rotateX(4deg)  rotateY(-4deg)  rotateZ(-1deg); }
-  50%      { transform: rotateX(12deg) rotateY(8deg)   rotateZ(2deg);  }
-  75%      { transform: rotateX(2deg)  rotateY(-6deg)  rotateZ(0deg);  }
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
 }
 
 .rocket-trail {
   position: absolute;
-  top: 59%;
+  top: 58%;
   right: 92%;
   width: 96px;
   height: 8px;

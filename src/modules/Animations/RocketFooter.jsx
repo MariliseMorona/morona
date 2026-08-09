@@ -1,6 +1,313 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 import "./rocketFooter.css";
 
+/* =========================================================
+ *  Helpers de interpolação e wireframe manual do foguete
+ * ========================================================= */
+const lerp = (a, b, t) => a + (b - a) * t;
+
+const catmullRomKeyframes = (progress, values) => {
+  const n = values.length;
+  const scaled = Math.max(0, Math.min(1, progress)) * (n - 1);
+  const i = Math.floor(scaled);
+  const t = scaled - i;
+  const p0 = values[Math.max(0, i - 1)];
+  const p1 = values[i];
+  const p2 = values[Math.min(n - 1, i + 1)];
+  const p3 = values[Math.min(n - 1, i + 2)];
+  const t2 = t * t;
+  const t3 = t2 * t;
+  return 0.5 * (
+    2 * p1 +
+    (-p0 + p2) * t +
+    (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 +
+    (-p0 + 3 * p1 - 3 * p2 + p3) * t3
+  );
+};
+
+const circle = (radius, y, segments = 64) => {
+  const pts = [];
+  for (let i = 0; i <= segments; i++) {
+    const a = (i / segments) * Math.PI * 2;
+    pts.push(new THREE.Vector3(Math.cos(a) * radius, y, Math.sin(a) * radius));
+  }
+  return new THREE.BufferGeometry().setFromPoints(pts);
+};
+
+const generatorPair = (radius, yBottom, yTop, segments = 8) => {
+  const pairs = [];
+  for (let i = 0; i < segments; i++) {
+    const a = (i / segments) * Math.PI * 2;
+    const x = Math.cos(a) * radius;
+    const z = Math.sin(a) * radius;
+    pairs.push(new THREE.Vector3(x, yBottom, z), new THREE.Vector3(x, yTop, z));
+  }
+  return new THREE.BufferGeometry().setFromPoints(pairs);
+};
+
+const coneWire = (baseRadius, height, radialSegments = 20, ringSegments = 5) => {
+  const geom = new THREE.BufferGeometry();
+  const positions = [];
+  for (let r = 1; r <= ringSegments; r++) {
+    const t = r / (ringSegments + 1);
+    const y = -height / 2 + height * t;
+    const R = baseRadius * (1 - t);
+    for (let i = 0; i <= radialSegments; i++) {
+      const a = (i / radialSegments) * Math.PI * 2;
+      positions.push(Math.cos(a) * R, y, Math.sin(a) * R);
+    }
+  }
+  geom.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  return geom;
+};
+
+const cylinderWire = (radius, height, radialSegments = 24, ringSegments = 4) => {
+  const geom = new THREE.BufferGeometry();
+  const positions = [];
+  const yTop = height / 2;
+  const yBot = -height / 2;
+  for (let r = 1; r <= ringSegments; r++) {
+    const t = r / (ringSegments + 1);
+    const y = lerp(yBot, yTop, t);
+    for (let i = 0; i <= radialSegments; i++) {
+      const a = (i / radialSegments) * Math.PI * 2;
+      positions.push(Math.cos(a) * radius, y, Math.sin(a) * radius);
+    }
+  }
+  geom.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  return geom;
+};
+
+const triangleFin = (side) => {
+  const s = side === "left" ? -1 : 1;
+  const pts = [
+    new THREE.Vector3(s * 1.35, -1.3, 0),
+    new THREE.Vector3(s * 2.55, -2.55, 0),
+    new THREE.Vector3(s * 1.35, -1.85, 0),
+    new THREE.Vector3(s * 1.35, -1.3, 0),
+  ];
+  return new THREE.BufferGeometry().setFromPoints(pts);
+};
+
+const noseLine = (baseRadius, height, steps = 14) => {
+  const pts = [];
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const y = height * t;
+    const R = baseRadius * (1 - t);
+    pts.push(new THREE.Vector3(R, y, 0));
+  }
+  return new THREE.BufferGeometry().setFromPoints(pts);
+};
+
+const outlineProfile = () => {
+  const noseBaseY = 3.0;
+  const noseHeight = 5.2;
+  const noseTipY = noseBaseY + noseHeight;
+  const noseBaseRadius = 1.3;
+  const bodyRadius = 1.35;
+  const bodyHeight = 2.6;
+  const bodyTopY = noseBaseY;
+  const bodyBotY = bodyTopY - bodyHeight;
+
+  const pts = [
+    new THREE.Vector3(0, noseTipY, 0),
+    new THREE.Vector3(noseBaseRadius * 0.03, noseTipY - noseHeight * 0.22, 0),
+    new THREE.Vector3(noseBaseRadius * 0.08, noseTipY - noseHeight * 0.38, 0),
+    new THREE.Vector3(noseBaseRadius * 0.16, noseTipY - noseHeight * 0.5, 0),
+    new THREE.Vector3(noseBaseRadius * 0.28, noseTipY - noseHeight * 0.6, 0),
+    new THREE.Vector3(noseBaseRadius * 0.42, noseTipY - noseHeight * 0.7, 0),
+    new THREE.Vector3(noseBaseRadius * 0.6, noseTipY - noseHeight * 0.79, 0),
+    new THREE.Vector3(noseBaseRadius * 0.8, noseTipY - noseHeight * 0.87, 0),
+    new THREE.Vector3(noseBaseRadius * 0.95, noseTipY - noseHeight * 0.94, 0),
+    new THREE.Vector3(noseBaseRadius, noseBaseY, 0),
+    new THREE.Vector3(1.48, noseBaseY - 0.04, 0),
+    new THREE.Vector3(bodyRadius, bodyTopY - 0.1, 0),
+    new THREE.Vector3(bodyRadius, bodyBotY + 0.1, 0),
+    new THREE.Vector3(1.44, bodyBotY - 0.08, 0),
+    new THREE.Vector3(1.35, bodyBotY - 0.1, 0),
+    new THREE.Vector3(2.6, bodyBotY - 2.55, 0),
+    new THREE.Vector3(1.35, bodyBotY - 1.9, 0),
+    new THREE.Vector3(0, bodyBotY - 0.2, 0),
+  ];
+  const mirr = pts.map(p => new THREE.Vector3(-p.x, p.y, 0)).reverse();
+  const fullPts = [...pts, ...mirr, pts[0].clone()];
+  return new THREE.BufferGeometry().setFromPoints(fullPts);
+};
+
+const buildRocketWireParts = () => {
+  const noseBaseY = 3.0;
+  const noseHeight = 5.2;
+  const noseTipY = noseBaseY + noseHeight;
+  const noseBaseRadius = 1.3;
+  const bodyRadius = 1.35;
+  const bodyHeight = 2.6;
+  const bodyTopY = noseBaseY;
+  const bodyBotY = bodyTopY - bodyHeight;
+
+  const noseBaseRing = circle(noseBaseRadius, noseBaseY, 56);
+  const noseTipRing = circle(0.0001, noseTipY, 8);
+  const noseRings = coneWire(noseBaseRadius, noseHeight, 22, 2);
+  noseRings.translate(0, noseBaseY + noseHeight / 2, 0);
+  const noseSide1 = noseLine(noseBaseRadius, noseHeight, 16);
+  noseSide1.translate(0, noseBaseY, 0);
+  const noseSide2 = noseLine(noseBaseRadius, noseHeight, 16);
+  noseSide2.rotateY(Math.PI / 2);
+  noseSide2.translate(0, noseBaseY, 0);
+  const noseSide3 = noseLine(noseBaseRadius, noseHeight, 16);
+  noseSide3.rotateY(Math.PI);
+  noseSide3.translate(0, noseBaseY, 0);
+  const noseSide4 = noseLine(noseBaseRadius, noseHeight, 16);
+  noseSide4.rotateY(-Math.PI / 2);
+  noseSide4.translate(0, noseBaseY, 0);
+  const noseGenerators = generatorPair(noseBaseRadius, noseBaseY, noseTipY, 4);
+
+  const bodyTopRing = circle(bodyRadius, bodyTopY, 56);
+  const bodyBotRing = circle(bodyRadius, bodyBotY, 56);
+  const bodyRings = cylinderWire(bodyRadius, bodyHeight, 24, 2);
+  bodyRings.translate(0, bodyTopY - bodyHeight / 2, 0);
+  const bodyGenerators = generatorPair(bodyRadius, bodyBotY, bodyTopY, 4);
+
+  const baseRing = circle(1.35, bodyBotY, 56);
+  const baseRingOuter = circle(1.44, bodyBotY - 0.08, 56);
+
+  const windowOuterTorus = new THREE.TorusGeometry(0.62, 0.0001, 10, 48);
+  const windowInnerTorus = new THREE.TorusGeometry(0.36, 0.0001, 10, 36);
+  const windowFrameBig = circle(0.62, bodyTopY - 1.4, 48);
+  const windowFrameSmall = circle(0.36, bodyTopY - 1.4, 32);
+  windowFrameBig.rotateX(Math.PI / 2);
+  windowFrameSmall.rotateX(Math.PI / 2);
+  windowFrameBig.translate(0, bodyTopY - 1.4, bodyRadius + 0.01);
+  windowFrameSmall.translate(0, bodyTopY - 1.4, bodyRadius + 0.01);
+
+  const leftFin = triangleFin("left");
+  const rightFin = triangleFin("right");
+  const finTopLeft = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-1.35, bodyBotY + 0.05, 0),
+    new THREE.Vector3(-2.55, bodyBotY - 1.25, 0),
+  ]);
+  const finTopRight = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(1.35, bodyBotY + 0.05, 0),
+    new THREE.Vector3(2.55, bodyBotY - 1.25, 0),
+  ]);
+  const finInnerLeft = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-1.35, bodyBotY - 0.4, 0),
+    new THREE.Vector3(-1.35, bodyBotY - 1.05, 0),
+  ]);
+  const finInnerRight = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(1.35, bodyBotY - 0.4, 0),
+    new THREE.Vector3(1.35, bodyBotY - 1.05, 0),
+  ]);
+  const finAftLeft = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-1.35, bodyBotY - 0.95, 0),
+    new THREE.Vector3(-2.4, bodyBotY - 2.4, 0),
+    new THREE.Vector3(-1.35, bodyBotY - 1.8, 0),
+  ]);
+  const finAftRight = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(1.35, bodyBotY - 0.95, 0),
+    new THREE.Vector3(2.4, bodyBotY - 2.4, 0),
+    new THREE.Vector3(1.35, bodyBotY - 1.8, 0),
+  ]);
+
+  const shoulder = circle(1.4, noseBaseY, 56);
+  const shoulderOuter = circle(1.48, noseBaseY - 0.05, 56);
+
+  const outline0 = outlineProfile();
+  const outline1 = outlineProfile(); outline1.rotateY(Math.PI / 2);
+  const outline2 = outlineProfile(); outline2.rotateY(Math.PI);
+  const outline3 = outlineProfile(); outline3.rotateY(-Math.PI / 2);
+
+  const bodyMidRing = circle(bodyRadius, noseBaseY - bodyHeight / 2, 32);
+
+  return [
+    { geom: outline0, type: "line", accent: false },
+    { geom: outline1, type: "line", accent: false },
+    { geom: outline2, type: "line", accent: false },
+    { geom: outline3, type: "line", accent: false },
+    { geom: noseBaseRing, type: "line" },
+    { geom: bodyTopRing, type: "line" },
+    { geom: bodyMidRing, type: "line" },
+    { geom: bodyBotRing, type: "line" },
+    { geom: windowFrameBig, type: "line" },
+    { geom: windowFrameSmall, type: "line", accent: true },
+    { geom: windowOuterTorus, type: "edge", accent: true },
+    { geom: windowInnerTorus, type: "edge", accent: true },
+  ];
+};
+
+const ROCKET_LAYERS = [
+  { z: -0.08, color: "#38bdf8", opacity: 0.5, scale: 1.01 },
+  { z: 0.0, color: "#0ea5e9", opacity: 0.99, scale: 1.0 },
+];
+
+const ACCENT = "#e0f2fe";
+
+/* =========================================================
+ *  Componente 3D do foguete (R3F, wireframe manual)
+ * ========================================================= */
+const Rocket3D = () => {
+  const tiltRef = useRef(null);
+  const wireParts = useMemo(buildRocketWireParts, []);
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime;
+    const g = tiltRef.current;
+    if (!g) return;
+    const p = ((t % 7) / 7 + 1) % 1;
+    g.rotation.x = (catmullRomKeyframes(p, [5, 3, 7, 2, 5]) * Math.PI) / 180;
+    g.rotation.y = (catmullRomKeyframes(p, [-6, -2, 5, -3, -6]) * Math.PI) / 180;
+    g.rotation.z = (catmullRomKeyframes(p, [-1.5, -0.5, 1.5, 0, -1.5]) * Math.PI) / 180;
+    g.position.y = Math.sin(t * 1.3) * 0.015;
+  });
+
+  return (
+    <group scale={[0.55, 0.55, 0.55]}>
+      <group position={[0, -0.05, 0]}>
+        <group rotation={[0, 0, -Math.PI / 2]}>
+          <group ref={tiltRef}>
+            {ROCKET_LAYERS.map((layer, li) => (
+              <group
+                key={li}
+                position={[0, 0, layer.z]}
+                scale={[layer.scale, layer.scale, layer.scale]}
+              >
+                {wireParts.map((p, pi) => {
+                  const color = p.accent ? ACCENT : layer.color;
+                  const opacity = p.accent ? Math.min(1, layer.opacity + 0.05) : layer.opacity;
+                  if (p.type === "pair") {
+                    return (
+                      <lineSegments key={pi} geometry={p.geom}>
+                        <lineBasicMaterial color={color} transparent opacity={opacity * 0.82} />
+                      </lineSegments>
+                    );
+                  }
+                  if (p.type === "edge") {
+                    return (
+                      <lineSegments key={pi} geometry={new THREE.EdgesGeometry(p.geom, 0)}>
+                        <lineBasicMaterial color={color} transparent opacity={opacity} />
+                      </lineSegments>
+                    );
+                  }
+                  return (
+                    <line key={pi} geometry={p.geom}>
+                      <lineBasicMaterial color={color} transparent opacity={opacity} />
+                    </line>
+                  );
+                })}
+              </group>
+            ))}
+          </group>
+        </group>
+      </group>
+    </group>
+  );
+};
+
+/* =========================================================
+ *  Wrapper público: Canvas R3F + engine de voo (RAF)
+ * ========================================================= */
 export const RocketFooter = () => {
   const rocketRef = useRef(null);
   const trackRef = useRef(null);
@@ -223,254 +530,22 @@ export const RocketFooter = () => {
   }, []);
 
   return (
-    <div className="rocket-footer-track rocket-footer-track--wide" ref={trackRef} aria-hidden="true">
+    <div
+      className="rocket-footer-track rocket-footer-track--wide"
+      ref={trackRef}
+      aria-hidden="true"
+    >
       <div className="rocket-footer-rocket" ref={rocketRef}>
-        <svg
-          viewBox="0 0 120 120"
-          className="rocket-footer-svg"
-          xmlns="http://www.w3.org/2000/svg"
+        <Canvas
+          className="rocket-footer-canvas"
+          gl={{ antialias: true, alpha: true }}
+          frameloop="always"
+          dpr={[1, 2]}
+          camera={{ position: [0, 0, 14], fov: 28, near: 0.1, far: 100 }}
         >
-          <defs>
-            <linearGradient id="rocketStroke" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0%" stopColor="#7dd3fc" />
-              <stop offset="50%" stopColor="#38bdf8" />
-              <stop offset="100%" stopColor="#0ea5e9" />
-            </linearGradient>
-            <filter id="rocketGlow" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="1.2" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <linearGradient id="rocketThrust" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#bae6fd" stopOpacity="0.95" />
-              <stop offset="35%" stopColor="#7dd3fc" stopOpacity="0.55" />
-              <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.22" />
-              <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-
-          <g filter="url(#rocketGlow)">
-            <g className="rocket-depth rocket-depth-back" opacity="0.28">
-              <path
-                d="M60 10 C74 28 80 48 80 70 L80 86 L40 86 L40 70 C40 48 46 28 60 10 Z"
-                fill="none"
-                stroke="#7dd3fc"
-                strokeWidth="2.2"
-                strokeLinejoin="round"
-                transform="translate(-0.9, 1.2)"
-              />
-              <path
-                d="M40 82 L24 104 L40 98 Z"
-                fill="none"
-                stroke="#7dd3fc"
-                strokeWidth="2.0"
-                strokeLinejoin="round"
-                transform="translate(-0.8, 1.0)"
-              />
-              <path
-                d="M80 82 L96 104 L80 98 Z"
-                fill="none"
-                stroke="#7dd3fc"
-                strokeWidth="2.0"
-                strokeLinejoin="round"
-                transform="translate(-0.8, 1.0)"
-              />
-              <circle
-                cx="60"
-                cy="52"
-                r="9"
-                fill="none"
-                stroke="#7dd3fc"
-                strokeWidth="2.0"
-                transform="translate(-0.8, 1.0)"
-              />
-            </g>
-
-            <g className="rocket-depth rocket-depth-mid" opacity="0.5">
-              <path
-                d="M60 10 C74 28 80 48 80 70 L80 86 L40 86 L40 70 C40 48 46 28 60 10 Z"
-                fill="none"
-                stroke="url(#rocketStroke)"
-                strokeWidth="1.8"
-                strokeLinejoin="round"
-                transform="translate(-0.4, 0.55)"
-              />
-              <path
-                d="M40 82 L24 104 L40 98 Z"
-                fill="none"
-                stroke="url(#rocketStroke)"
-                strokeWidth="1.6"
-                strokeLinejoin="round"
-                transform="translate(-0.35, 0.5)"
-              />
-              <path
-                d="M80 82 L96 104 L80 98 Z"
-                fill="none"
-                stroke="url(#rocketStroke)"
-                strokeWidth="1.6"
-                strokeLinejoin="round"
-                transform="translate(-0.35, 0.5)"
-              />
-              <circle
-                cx="60"
-                cy="52"
-                r="9"
-                fill="none"
-                stroke="url(#rocketStroke)"
-                strokeWidth="1.6"
-                transform="translate(-0.35, 0.5)"
-              />
-            </g>
-
-            <g
-              className="rocket-outline"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity="0.96"
-            >
-              <path
-                d="M60 10 C74 28 80 48 80 70 L80 86 L40 86 L40 70 C40 48 46 28 60 10 Z"
-                stroke="url(#rocketStroke)"
-                strokeWidth="1.2"
-              />
-              <path
-                d="M60 22 C70 36 74 52 74 70 L74 80 L46 80 L46 70 C46 52 50 36 60 22 Z"
-                stroke="#7dd3fc"
-                strokeWidth="0.9"
-                opacity="0.55"
-              />
-              <path
-                d="M60 6 C74 26 80 46 80 68 L40 68 C40 46 46 26 60 6 Z"
-                stroke="#e0f2fe"
-                strokeWidth="0.7"
-                opacity="0.45"
-              />
-
-              <path
-                d="M40 82 L24 104 L40 98 Z"
-                stroke="url(#rocketStroke)"
-                strokeWidth="1.2"
-              />
-              <path
-                d="M80 82 L96 104 L80 98 Z"
-                stroke="url(#rocketStroke)"
-                strokeWidth="1.2"
-              />
-
-              <path
-                d="M48 86 L42 96 L44 90 Z"
-                stroke="#7dd3fc"
-                strokeWidth="0.9"
-              />
-              <path
-                d="M72 86 L78 96 L76 90 Z"
-                stroke="#7dd3fc"
-                strokeWidth="0.9"
-              />
-
-              <circle
-                cx="60"
-                cy="52"
-                r="9"
-                stroke="url(#rocketStroke)"
-                strokeWidth="1.2"
-              />
-              <circle
-                cx="60"
-                cy="52"
-                r="5.4"
-                stroke="#e0f2fe"
-                strokeWidth="0.7"
-                opacity="0.55"
-              />
-              <path
-                d="M56 48 C57 50 59 51 60 51"
-                stroke="#e0f2fe"
-                strokeWidth="0.7"
-                opacity="0.75"
-              />
-
-              <path
-                d="M50 30 C54 42 56 50 56 56"
-                stroke="#bae6fd"
-                strokeWidth="0.8"
-                opacity="0.75"
-              />
-              <path
-                d="M70 30 C66 42 64 50 64 56"
-                stroke="#bae6fd"
-                strokeWidth="0.8"
-                opacity="0.75"
-              />
-            </g>
-
-            <g className="rocket-flames" opacity="0.82">
-              <path
-                d="M52 96 C50 112 48 116 52 118 C54 116 54 110 54 100 Z"
-                fill="url(#rocketThrust)"
-                stroke="none"
-              />
-              <path
-                d="M60 100 C57 120 57 124 60 126 C63 124 63 118 62 104 Z"
-                fill="url(#rocketThrust)"
-                stroke="none"
-              />
-              <path
-                d="M68 96 C70 112 72 116 68 118 C66 116 66 110 66 100 Z"
-                fill="url(#rocketThrust)"
-                stroke="none"
-              />
-              <path
-                d="M50 94 C46 108 44 114 50 118"
-                fill="none"
-                stroke="#bae6fd"
-                strokeWidth="0.9"
-                strokeLinecap="round"
-                opacity="0.8"
-              >
-                <animate
-                  attributeName="d"
-                  values="M50 94 C46 108 44 114 50 118;M50 94 C46 112 44 118 50 122;M50 94 C46 108 44 114 50 118"
-                  dur="0.5s"
-                  repeatCount="indefinite"
-                />
-              </path>
-              <path
-                d="M70 94 C74 108 76 114 70 118"
-                fill="none"
-                stroke="#bae6fd"
-                strokeWidth="0.9"
-                strokeLinecap="round"
-                opacity="0.8"
-              >
-                <animate
-                  attributeName="d"
-                  values="M70 94 C74 108 76 114 70 118;M70 94 C74 112 76 118 70 122;M70 94 C74 108 76 114 70 118"
-                  dur="0.55s"
-                  repeatCount="indefinite"
-                />
-              </path>
-              <path
-                d="M60 96 C58 114 58 120 60 124"
-                fill="none"
-                stroke="#e0f2fe"
-                strokeWidth="0.9"
-                strokeLinecap="round"
-                opacity="0.9"
-              >
-                <animate
-                  attributeName="d"
-                  values="M60 96 C58 114 58 120 60 124;M60 96 C58 120 58 126 60 130;M60 96 C58 114 58 120 60 124"
-                  dur="0.45s"
-                  repeatCount="indefinite"
-                />
-              </path>
-            </g>
-          </g>
-        </svg>
+          <ambientLight intensity={0.3} />
+          <Rocket3D />
+        </Canvas>
 
         <div className="rocket-trail">
           <div className="rocket-trail-core" />
