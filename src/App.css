@@ -76,6 +76,10 @@ p.danger {
 	color: red;
 }
 
+section#about {
+  scroll-margin-top: 100px;
+}
+
 section#skills {
   scroll-margin-top: 180px;
 }

@@ -6,7 +6,6 @@ import "./rocketFooter.css";
 /* =========================================================
  *  Helpers de interpolação e wireframe manual do foguete
  * ========================================================= */
-const lerp = (a, b, t) => a + (b - a) * t;
 
 const catmullRomKeyframes = (progress, values) => {
   const n = values.length;
@@ -32,72 +31,6 @@ const circle = (radius, y, segments = 64) => {
   for (let i = 0; i <= segments; i++) {
     const a = (i / segments) * Math.PI * 2;
     pts.push(new THREE.Vector3(Math.cos(a) * radius, y, Math.sin(a) * radius));
-  }
-  return new THREE.BufferGeometry().setFromPoints(pts);
-};
-
-const generatorPair = (radius, yBottom, yTop, segments = 8) => {
-  const pairs = [];
-  for (let i = 0; i < segments; i++) {
-    const a = (i / segments) * Math.PI * 2;
-    const x = Math.cos(a) * radius;
-    const z = Math.sin(a) * radius;
-    pairs.push(new THREE.Vector3(x, yBottom, z), new THREE.Vector3(x, yTop, z));
-  }
-  return new THREE.BufferGeometry().setFromPoints(pairs);
-};
-
-const coneWire = (baseRadius, height, radialSegments = 20, ringSegments = 5) => {
-  const geom = new THREE.BufferGeometry();
-  const positions = [];
-  for (let r = 1; r <= ringSegments; r++) {
-    const t = r / (ringSegments + 1);
-    const y = -height / 2 + height * t;
-    const R = baseRadius * (1 - t);
-    for (let i = 0; i <= radialSegments; i++) {
-      const a = (i / radialSegments) * Math.PI * 2;
-      positions.push(Math.cos(a) * R, y, Math.sin(a) * R);
-    }
-  }
-  geom.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-  return geom;
-};
-
-const cylinderWire = (radius, height, radialSegments = 24, ringSegments = 4) => {
-  const geom = new THREE.BufferGeometry();
-  const positions = [];
-  const yTop = height / 2;
-  const yBot = -height / 2;
-  for (let r = 1; r <= ringSegments; r++) {
-    const t = r / (ringSegments + 1);
-    const y = lerp(yBot, yTop, t);
-    for (let i = 0; i <= radialSegments; i++) {
-      const a = (i / radialSegments) * Math.PI * 2;
-      positions.push(Math.cos(a) * radius, y, Math.sin(a) * radius);
-    }
-  }
-  geom.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-  return geom;
-};
-
-const triangleFin = (side) => {
-  const s = side === "left" ? -1 : 1;
-  const pts = [
-    new THREE.Vector3(s * 1.35, -1.3, 0),
-    new THREE.Vector3(s * 2.55, -2.55, 0),
-    new THREE.Vector3(s * 1.35, -1.85, 0),
-    new THREE.Vector3(s * 1.35, -1.3, 0),
-  ];
-  return new THREE.BufferGeometry().setFromPoints(pts);
-};
-
-const noseLine = (baseRadius, height, steps = 14) => {
-  const pts = [];
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    const y = height * t;
-    const R = baseRadius * (1 - t);
-    pts.push(new THREE.Vector3(R, y, 0));
   }
   return new THREE.BufferGeometry().setFromPoints(pts);
 };
@@ -139,8 +72,6 @@ const outlineProfile = () => {
 
 const buildRocketWireParts = () => {
   const noseBaseY = 3.0;
-  const noseHeight = 5.2;
-  const noseTipY = noseBaseY + noseHeight;
   const noseBaseRadius = 1.3;
   const bodyRadius = 1.35;
   const bodyHeight = 2.6;
@@ -148,30 +79,10 @@ const buildRocketWireParts = () => {
   const bodyBotY = bodyTopY - bodyHeight;
 
   const noseBaseRing = circle(noseBaseRadius, noseBaseY, 56);
-  const noseTipRing = circle(0.0001, noseTipY, 8);
-  const noseRings = coneWire(noseBaseRadius, noseHeight, 22, 2);
-  noseRings.translate(0, noseBaseY + noseHeight / 2, 0);
-  const noseSide1 = noseLine(noseBaseRadius, noseHeight, 16);
-  noseSide1.translate(0, noseBaseY, 0);
-  const noseSide2 = noseLine(noseBaseRadius, noseHeight, 16);
-  noseSide2.rotateY(Math.PI / 2);
-  noseSide2.translate(0, noseBaseY, 0);
-  const noseSide3 = noseLine(noseBaseRadius, noseHeight, 16);
-  noseSide3.rotateY(Math.PI);
-  noseSide3.translate(0, noseBaseY, 0);
-  const noseSide4 = noseLine(noseBaseRadius, noseHeight, 16);
-  noseSide4.rotateY(-Math.PI / 2);
-  noseSide4.translate(0, noseBaseY, 0);
-  const noseGenerators = generatorPair(noseBaseRadius, noseBaseY, noseTipY, 4);
 
   const bodyTopRing = circle(bodyRadius, bodyTopY, 56);
   const bodyBotRing = circle(bodyRadius, bodyBotY, 56);
-  const bodyRings = cylinderWire(bodyRadius, bodyHeight, 24, 2);
-  bodyRings.translate(0, bodyTopY - bodyHeight / 2, 0);
-  const bodyGenerators = generatorPair(bodyRadius, bodyBotY, bodyTopY, 4);
-
-  const baseRing = circle(1.35, bodyBotY, 56);
-  const baseRingOuter = circle(1.44, bodyBotY - 0.08, 56);
+  const bodyMidRing = circle(bodyRadius, noseBaseY - bodyHeight / 2, 32);
 
   const windowOuterTorus = new THREE.TorusGeometry(0.62, 0.0001, 10, 48);
   const windowInnerTorus = new THREE.TorusGeometry(0.36, 0.0001, 10, 36);
@@ -182,44 +93,10 @@ const buildRocketWireParts = () => {
   windowFrameBig.translate(0, bodyTopY - 1.4, bodyRadius + 0.01);
   windowFrameSmall.translate(0, bodyTopY - 1.4, bodyRadius + 0.01);
 
-  const leftFin = triangleFin("left");
-  const rightFin = triangleFin("right");
-  const finTopLeft = new THREE.BufferGeometry().setFromPoints([
-    new THREE.Vector3(-1.35, bodyBotY + 0.05, 0),
-    new THREE.Vector3(-2.55, bodyBotY - 1.25, 0),
-  ]);
-  const finTopRight = new THREE.BufferGeometry().setFromPoints([
-    new THREE.Vector3(1.35, bodyBotY + 0.05, 0),
-    new THREE.Vector3(2.55, bodyBotY - 1.25, 0),
-  ]);
-  const finInnerLeft = new THREE.BufferGeometry().setFromPoints([
-    new THREE.Vector3(-1.35, bodyBotY - 0.4, 0),
-    new THREE.Vector3(-1.35, bodyBotY - 1.05, 0),
-  ]);
-  const finInnerRight = new THREE.BufferGeometry().setFromPoints([
-    new THREE.Vector3(1.35, bodyBotY - 0.4, 0),
-    new THREE.Vector3(1.35, bodyBotY - 1.05, 0),
-  ]);
-  const finAftLeft = new THREE.BufferGeometry().setFromPoints([
-    new THREE.Vector3(-1.35, bodyBotY - 0.95, 0),
-    new THREE.Vector3(-2.4, bodyBotY - 2.4, 0),
-    new THREE.Vector3(-1.35, bodyBotY - 1.8, 0),
-  ]);
-  const finAftRight = new THREE.BufferGeometry().setFromPoints([
-    new THREE.Vector3(1.35, bodyBotY - 0.95, 0),
-    new THREE.Vector3(2.4, bodyBotY - 2.4, 0),
-    new THREE.Vector3(1.35, bodyBotY - 1.8, 0),
-  ]);
-
-  const shoulder = circle(1.4, noseBaseY, 56);
-  const shoulderOuter = circle(1.48, noseBaseY - 0.05, 56);
-
   const outline0 = outlineProfile();
   const outline1 = outlineProfile(); outline1.rotateY(Math.PI / 2);
   const outline2 = outlineProfile(); outline2.rotateY(Math.PI);
   const outline3 = outlineProfile(); outline3.rotateY(-Math.PI / 2);
-
-  const bodyMidRing = circle(bodyRadius, noseBaseY - bodyHeight / 2, 32);
 
   return [
     { geom: outline0, type: "line", accent: false },

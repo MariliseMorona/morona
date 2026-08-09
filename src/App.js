@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NightSky from './modules/Animations/NightSky';
 import { NavBar } from './modules/Header/NavBar';
 import { Banner } from './modules/Body/Banner';
+import { About } from './modules/Body/About';
 import { Skills } from './modules/Body/Skills';
 import { Experience } from './modules/Body/Experience';
 import { Projects } from './modules/Body/Projects';
@@ -14,7 +15,8 @@ function App() {
     <div className="App">
       <NightSky />
       <NavBar />
-      <Banner/>
+      <Banner />
+      <About />
       <Skills />
       <Experience/>
       <Projects/>
