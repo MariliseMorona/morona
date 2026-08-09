@@ -1,6 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NightSky from './modules/Animations/NightSky';
+import AsteroidCursor from './modules/Animations/AsteroidCursor';
 import { NavBar } from './modules/Header/NavBar';
 import { Banner } from './modules/Body/Banner';
 import { About } from './modules/Body/About';
@@ -21,6 +22,7 @@ function App() {
       <Experience/>
       <Projects/>
       <Footer/>
+      <AsteroidCursor />
     </div>
   );
 }
